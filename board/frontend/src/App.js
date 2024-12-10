@@ -7,6 +7,8 @@ import List from './component/member/List';
 import MyPage from './component/common/MyPage';
 import Main from './component/common/Main';
 import Admin from './component/admin/Admin';
+import Detail from './component/member/Detail';
+import Edit from './component/member/Edit';
 
 
 const App = () => {
@@ -16,9 +18,11 @@ const App = () => {
       <Routes>
 				<Route path="/" exact element={<Main />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/list" element={<List />} />
+        <Route path="/members" element={<List />} />
         <Route path="/mypage" element={<MyPage />} />
 				<Route path="/admin" element={<Admin />} />
+				<Route path="/members/:id" element={<Detail />} /> {/* 회원 상세 페이지 */}
+				<Route path="/members/edit/:id" element={<Edit />} /> {/* 회원 수정 페이지 */}
       </Routes>
     </Router>
   );

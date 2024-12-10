@@ -54,7 +54,7 @@ const Navbar = () => {
       <Logo><NavLink to="/" style={{"fontSize":"2rem"}}>MyApp</NavLink></Logo>
       <NavLinks>
         <NavLink to="/signup">SignUp</NavLink>
-        <NavLink to="/list">List</NavLink>
+        <NavLink to="/members">List</NavLink>
         <NavLink to="/mypage">MyPage</NavLink>
 				<NavLink to="/admin">Admin</NavLink>
       </NavLinks>

@@ -73,9 +73,7 @@ const SignUp = () => {
       // Spring Boot 서버로 POST 요청
 			console.log('회원가입 데이터:', formData);
 
-      const response = await axios.post('http://localhost:8011/api/users/', formData);
-
-			console.log(response.data);
+      const response = await axios.post('http://localhost:8011/api/members/', formData);
 
       setMessage(response.data); // 성공 메시지
     } catch (error) {
