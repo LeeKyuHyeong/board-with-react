@@ -1,2 +1,4 @@
 # board-with-react
-reactBoard
+board with variable language
+
+react first!
