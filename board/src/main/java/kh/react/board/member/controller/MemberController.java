@@ -4,17 +4,10 @@ import kh.react.board.member.model.Member;
 import kh.react.board.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.PagedModel;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -38,7 +31,8 @@ public class MemberController {
                 "content", pageMembers.getContent(),  // 데이터 리스트
                 "totalElements", pageMembers.getTotalElements(),  // 전체 데이터 수
                 "totalPages", pageMembers.getTotalPages(),  // 전체 페이지 수
-                "currentPage", pageMembers.getNumber()  // 현재 페이지
+                "currentPage", pageMembers.getNumber(),  // 현재 페이지
+                "size", size        //목록 수
         );
     }
 
