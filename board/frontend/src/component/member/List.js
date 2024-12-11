@@ -76,6 +76,17 @@ const PageNumber = styled.button`
   }
 `;
 
+const SizeSpan = styled.span`
+	
+`;
+
+const SizeSelect = styled.select`
+  padding: 0.5rem;
+  margin: 0.5rem;
+  border-radius: 4px;
+	
+`;
+
 const List = () => {
   const [members, setMembers] = useState([]);
 	const [name, setName] = useState('');
@@ -88,17 +99,18 @@ const List = () => {
 
 	// 페이지 로드 시 기본적으로 모든 회원을 가져오기
 	useEffect(() => {
-		fetchMembers('', '');  // 초기값은 빈 문자열로 전체 회원 조회
+		fetchMembers('', '', page, size);  // 초기값은 빈 문자열로 전체 회원 조회
 	}, []);
 
   // 서버에서 사용자 목록을 가져오는 함수
   // useEffect(() => {
-	const fetchMembers = async (name, email, page = 0) => {
+	const fetchMembers = async (name, email, page, size) => {
 		try {
 			setLoading(true);
-			const response = await axios.get(`http://localhost:8011/api/members?`, {params : {name, email, page, size : 3}});
+			const response = await axios.get(`http://localhost:8011/api/members?`, {params : {name, email, page, size}});
 			setMembers(response.data.content); // 'content'는 페이징된 데이터
 			setTotalPages(response.data.totalPages); // 전체 페이지 수
+			setSize(response.data.size);
 			setLoading(false);
 		} catch (error) {
 			setError('Error fetching members');
@@ -111,17 +123,18 @@ const List = () => {
 	
 	// 검색 버튼 클릭 시
   const handleSearch = () => {
-    fetchMembers(name, email);  // 현재 입력된 검색 조건으로 회원 목록을 가져옴
+    fetchMembers(name, email, page, size);  // 현재 입력된 검색 조건으로 회원 목록을 가져옴
   };
 
 	// 페이지 변경 시
   const handlePageChange = (newPage) => {
-    fetchMembers(name, email, newPage);  // 페이지 번호 변경 시 회원 목록 갱신
+		setPage(newPage);
+    fetchMembers(name, email, newPage, size);  // 페이지 번호 변경 시 회원 목록 갱신
   };
 
 	// 페이지 로드 시 기본적으로 모든 회원을 가져오기
   useEffect(() => {
-    fetchMembers('', '', 0);  // 초기값은 빈 문자열로 전체 회원 조회
+    fetchMembers('', '', page, size);  // 초기값은 빈 문자열로 전체 회원 조회
   }, []);
 
 	const handleDelete = async (id) => {
@@ -143,9 +156,16 @@ const List = () => {
     }
   }
 
-	// const handlePageClick = (pageNumber) => {
-  //   setPage(pageNumber); // 클릭한 페이지 번호로 페이지 변경
-  // };
+	const handleBtnClick = (newPage) => {
+    setPage(newPage);
+    fetchMembers(name, email, newPage, size);  // 페이지 번호 변경 시 회원 목록 갱신
+  };
+
+	const handleSize = (newSize) => {
+		setSize(newSize);
+		setPage(0);
+		fetchMembers(name, email, page, newSize);  // 페이지 번호 변경 시 회원 목록 갱신
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -171,6 +191,19 @@ const List = () => {
 					onKeyDown={(e) => activeEnter(e)}
 				/>
 				<Button onClick={handleSearch}>Search</Button>
+				<div style={{"float":"right"}}>
+				<SizeSpan>Size</SizeSpan>
+				<SizeSelect 
+					name="size"
+					value={size}
+					onChange={(e) => handleSize(e.target.value)}>
+						<option value="3">3</option>
+						<option value="5">5</option>
+						<option value="10">10</option>
+						<option value="30">30</option>
+						<option value="100">100</option>
+				</SizeSelect>
+				</div>
 			</div>
 
       <Table>
@@ -213,10 +246,12 @@ const List = () => {
 
 			{/* 페이지 이동 버튼 */}
 			<div style={{"display":"flex", "justifyContent":"flex-end"}}>
-        <PageButton onClick={() => setPage(page > 0 ? page - 1 : 0)} disabled={page === 0}>
+        <PageButton onClick={() => handleBtnClick(page > 0 ? page - 1 : 0)}
+				disabled={page === 0}>
           Previous
         </PageButton>
-        <PageButton onClick={() => setPage(page < totalPages - 1 ? page + 1 : totalPages - 1)} disabled={page === totalPages - 1}>
+        <PageButton onClick={() => handleBtnClick(page < totalPages - 1 ? page + 1 : totalPages - 1)}
+				disabled={page === totalPages - 1}>
           Next
         </PageButton>
       	<PageButton onClick={() => window.location.reload()}>Refresh</PageButton>
