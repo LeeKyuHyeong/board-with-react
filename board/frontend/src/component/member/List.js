@@ -99,7 +99,7 @@ const List = () => {
 
 	// 페이지 로드 시 기본적으로 모든 회원을 가져오기
 	useEffect(() => {
-		fetchMembers('', '', page, size);  // 초기값은 빈 문자열로 전체 회원 조회
+		fetchMembers('', '');  // 초기값은 빈 문자열로 전체 회원 조회
 	}, []);
 
   // 서버에서 사용자 목록을 가져오는 함수
@@ -134,7 +134,7 @@ const List = () => {
 
 	// 페이지 로드 시 기본적으로 모든 회원을 가져오기
   useEffect(() => {
-    fetchMembers('', '', page, size);  // 초기값은 빈 문자열로 전체 회원 조회
+    fetchMembers('', '');  // 초기값은 빈 문자열로 전체 회원 조회
   }, []);
 
 	const handleDelete = async (id) => {
@@ -222,9 +222,9 @@ const List = () => {
               <TableData>{member.email}</TableData>
               <TableData>{member.password}</TableData>
 							<TableData>
-                <Link to={`/members/${member.id}`}>View Details</Link>
+                <Button><Link to={`/members/${member.id}`} style={{"color":"white", "textDecoration":"none"}}>View Details</Link></Button>
                 <Button onClick={() => handleDelete(member.id)}>Delete</Button>
-								<Link to={`/members/edit/${member.id}`}>Edit</Link>
+								<Button><Link to={`/members/edit/${member.id}`} style={{"color":"white", "textDecoration":"none"}}>Edit</Link></Button>
               </TableData>
             </tr>
           ))}

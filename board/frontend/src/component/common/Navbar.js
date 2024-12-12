@@ -1,5 +1,5 @@
 // Navbar.js
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -48,15 +48,44 @@ const MobileMenuIcon = styled.div`
   }
 `;
 
-const Navbar = () => {
+const Navbar = ( { userData, sessionTime } ) => {
+
+	const [remainingTime, setRemainingTime] = useState(sessionTime);
+	
+	console.log("navbar sessionTime : " + sessionTime);
+	console.log("navbar remainingTime : " + remainingTime);
+  useEffect(() => {
+		if (sessionTime) {
+			const timer = setInterval(() => {
+        setRemainingTime((prev) => {
+          if (prev > 0) return prev - 1;
+          clearInterval(timer); // 타이머 중지
+          return 0;
+        });
+      }, 1000);
+
+      return () => clearInterval(timer); // 컴포넌트 언마운트 시 타이머 정리
+    }
+  }, [sessionTime]);
+
   return (
     <NavbarContainer>
       <Logo><NavLink to="/" style={{"fontSize":"2rem"}}>MyApp</NavLink></Logo>
       <NavLinks>
-        <NavLink to="/signup">SignUp</NavLink>
-        <NavLink to="/members">List</NavLink>
-        <NavLink to="/mypage">MyPage</NavLink>
-				<NavLink to="/admin">Admin</NavLink>
+				{userData ? (
+					<>
+          <span>Logged in as: {userData.name}, sessionTime Left: {remainingTime}s</span>
+					<NavLink to="/mypage">MyPage</NavLink>
+					<NavLink to="/admin">Admin</NavLink>
+					<NavLink to="/members">List</NavLink>
+					<NavLink to="/logout">Logout</NavLink>
+          </>
+        ) : (
+					<>
+					<NavLink to="/signup">SignUp</NavLink>
+					<NavLink to="/login">Login</NavLink>
+					</>
+        )}
       </NavLinks>
       <MobileMenuIcon>
         <span>&#9776;</span>
