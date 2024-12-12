@@ -11,4 +11,5 @@ public interface MemberRepository extends PagingAndSortingRepository<Member, Lon
     List<Member> findByNameContaining(String name);  // 이름으로 검색
     List<Member> findByEmailContaining(String email);  // 이메일로 검색
     List<Member> findByNameContainingAndEmailContaining(String name, String email);  // 이름과 이메일로 검색
+
 }

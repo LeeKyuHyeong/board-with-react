@@ -1,5 +1,7 @@
 package kh.react.board.member.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import kh.react.board.member.model.Member;
 import kh.react.board.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.Map;
 
 @RestController
@@ -69,5 +72,61 @@ public class MemberController {
     @PutMapping("/members/{id}")
     public Member updateMember(@PathVariable Long id, @RequestBody Member member) {
         return memberService.updateMember(id, member);
+    }
+
+//    @Autowired(required = false)
+//    private BCryptPasswordEncoder passwordEncoder;
+
+    @PostMapping("/auth/login/")
+    public Map<String, Object> login(@RequestBody Member member, HttpServletRequest request, HttpServletResponse response) {
+
+        String statCd = "";
+        String statMsg = "";
+
+        int timeout = 0;
+        Instant expiryTime = null;
+        // 사용자 이름으로 사용자 찾기
+        Member findMember = memberService.getMemberById(member.getId());
+//        if (findMember != null && passwordEncoder.matches(member.getPassword(), findMember.getPassword())) {
+        if (findMember != null && (member.getPassword().equals(findMember.getPassword()))) {
+            // 로그인 성공, 세션에 사용자 정보 저장
+            request.getSession().setAttribute("member", findMember);
+            timeout = request.getSession().getMaxInactiveInterval(); // 세션 유지 시간 (초)
+            expiryTime = Instant.now().plusSeconds(timeout); // 만료 시간 계산
+
+
+            statCd = "200";
+            statMsg = "로그인 성공";
+        } else {
+            statCd = "100";
+            statMsg = "로그인 실패: 아이디 또는 비밀번호가 잘못되었습니다.";
+        }
+
+        System.out.println("statMsg : " + statMsg);
+        return Map.of(
+                "member", findMember, // 로그인 유저 정보
+                "statCd", statCd,  // 로그인 상태 코드
+                "statMsg", statMsg,  // 로그인 시도 메세지
+                "timeout", timeout, // 세션 유지 시간 (초)
+                "expiryTime", expiryTime.toString() // 만료 시간 계산
+        );
+    }
+
+    @GetMapping("/auth/logout/")
+    public String logout(HttpServletRequest request) {
+        // 세션 무효화
+        request.getSession().invalidate();
+        return "로그아웃 성공";
+    }
+
+    @GetMapping("/auth/check-session/")
+    public String checkSession(HttpServletRequest request) {
+        // 세션에 저장된 사용자 정보 확인
+        Member member = (Member) request.getSession().getAttribute("member");
+        if (member != null) {
+            return "로그인한 사용자: " + member.getId();
+        } else {
+            return "로그인되지 않았습니다.";
+        }
     }
 }
