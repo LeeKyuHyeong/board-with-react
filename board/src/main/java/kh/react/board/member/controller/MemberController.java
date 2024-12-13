@@ -7,9 +7,9 @@ import kh.react.board.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
 import java.util.Map;
 
 @RestController
@@ -17,6 +17,9 @@ import java.util.Map;
 public class MemberController {
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // 모든 사용자 조회
     @GetMapping("/members")
@@ -42,13 +45,16 @@ public class MemberController {
     @PostMapping("/members/")
     public ResponseEntity<String> registerMember(@RequestBody Member member) {
         // 실제 회원가입 처리 로직
-        System.out.println("registerMember start!");
-        boolean isRegistered = memberService.registerMember(member);
-        if (isRegistered) {
+//        System.out.println("registerMember start!");
+
+        try {
+            memberService.registerMember(member);
             return ResponseEntity.ok("Member registered successfully");
-        } else {
-            return ResponseEntity.status(400).body("Error during registration");
+        } catch(IllegalArgumentException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
+
     }
 
     // 특정 ID를 가진 회원을 조회
@@ -77,23 +83,21 @@ public class MemberController {
 //    @Autowired(required = false)
 //    private BCryptPasswordEncoder passwordEncoder;
 
-    @PostMapping("/auth/login/")
+    @PostMapping("/login/")
     public Map<String, Object> login(@RequestBody Member member, HttpServletRequest request, HttpServletResponse response) {
 
-        String statCd = "";
-        String statMsg = "";
+        String statCd;
+        String statMsg;
 
         int timeout = 0;
-        Instant expiryTime = null;
         // 사용자 이름으로 사용자 찾기
         Member findMember = memberService.getMemberById(member.getId());
-//        if (findMember != null && passwordEncoder.matches(member.getPassword(), findMember.getPassword())) {
-        if (findMember != null && (member.getPassword().equals(findMember.getPassword()))) {
+
+        if (findMember != null && passwordEncoder.matches(member.getPassword(), findMember.getPassword())) {
+//        if (findMember != null && (member.getPassword().equals(findMember.getPassword()))) {
             // 로그인 성공, 세션에 사용자 정보 저장
             request.getSession().setAttribute("member", findMember);
             timeout = request.getSession().getMaxInactiveInterval(); // 세션 유지 시간 (초)
-            expiryTime = Instant.now().plusSeconds(timeout); // 만료 시간 계산
-
 
             statCd = "200";
             statMsg = "로그인 성공";
@@ -102,24 +106,24 @@ public class MemberController {
             statMsg = "로그인 실패: 아이디 또는 비밀번호가 잘못되었습니다.";
         }
 
-        System.out.println("statMsg : " + statMsg);
         return Map.of(
                 "member", findMember, // 로그인 유저 정보
                 "statCd", statCd,  // 로그인 상태 코드
                 "statMsg", statMsg,  // 로그인 시도 메세지
-                "timeout", timeout, // 세션 유지 시간 (초)
-                "expiryTime", expiryTime.toString() // 만료 시간 계산
+                "timeout", timeout // 세션 유지 시간 (초)
         );
     }
 
-    @GetMapping("/auth/logout/")
+    @GetMapping("/logout/")
     public String logout(HttpServletRequest request) {
         // 세션 무효화
+        System.out.println("로그아웃 성공");
+
         request.getSession().invalidate();
         return "로그아웃 성공";
     }
 
-    @GetMapping("/auth/check-session/")
+    @GetMapping("/check-session/")
     public String checkSession(HttpServletRequest request) {
         // 세션에 저장된 사용자 정보 확인
         Member member = (Member) request.getSession().getAttribute("member");
@@ -128,5 +132,18 @@ public class MemberController {
         } else {
             return "로그인되지 않았습니다.";
         }
+    }
+
+    // 비밀번호 초기화
+    @PostMapping("/find/")
+    public ResponseEntity<String> findMember(@RequestBody Member member) {
+        try {
+            memberService.resetPassword(member);
+            return ResponseEntity.ok("Password Reset finished");
+        } catch(IllegalArgumentException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 }

@@ -5,24 +5,22 @@ import kh.react.board.member.repository.MemberRepository;
 import kh.react.board.util.PagingUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class MemberService {
 
-    private List<Member> members = new ArrayList<>();
+    private final List<Member> members = new ArrayList<>();
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public int findAllCount() {
         return (int) memberRepository.count();
@@ -49,24 +47,38 @@ public class MemberService {
         return PagingUtil.getPagedData(members, page, size);
     }
 
+    // 회원가입
+    public void registerMember(Member member) {
 
+        if (memberRepository.existsByEmail(member.getEmail())) {
+            throw new IllegalArgumentException("Email is already in use.");
+        }
+        // 비밀번호 암호화
+        member.setPassword(passwordEncoder.encode(member.getPassword()));
 
-    // 총 사용자 수 반환
-    public long countMembers() {
-        return members.size();
-    }
-
-    // 사용자 저장
-    public Member saveMember(Member member) {
-        return memberRepository.save(member);
-    }
-
-    public boolean registerMember(Member member) {
-        // 예시: 데이터베이스에 유저를 추가하는 로직 (임시로 성공 처리)
+        // 사용자 저장
         memberRepository.save(member);
 
-        System.out.println("Member registered: " + member.getName());
-        return true;
+    }
+
+    // 비밀번호 초기화
+    public void resetPassword(Member member) {
+
+        Member findMem = memberRepository.findByEmail(member.getEmail()).orElseThrow(() -> new IllegalArgumentException("there's no member with this email."));
+
+        if(findMem != null && findMem.getName().equals(member.getName())) {
+            // 비밀번호 암호화
+            member.setPassword(passwordEncoder.encode("12345"));
+
+            member.setId(findMem.getId());
+
+            member.setRole(findMem.getRole());
+            // 사용자 저장
+            memberRepository.save(member);
+
+        } else {
+            throw new IllegalArgumentException("name and email does not match.");
+        }
     }
 
     // 특정 ID를 가진 회원을 조회
@@ -86,6 +98,7 @@ public class MemberService {
     public Member updateMember(Long id, Member updatedMember) {
         if (memberRepository.existsById(id)) {
             updatedMember.setId(id);  // 기존 ID를 유지
+            updatedMember.setPassword(passwordEncoder.encode(updatedMember.getPassword()));  // 비밀번호 암호화
             return memberRepository.save(updatedMember); // DB에 저장된 회원 정보 업데이트
         }
         throw new RuntimeException("Member not found");
