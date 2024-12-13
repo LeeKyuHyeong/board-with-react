@@ -9,7 +9,7 @@ import axios from 'axios';
 import Navbar from './component/common/Navbar';
 import SignUp from './component/member/SignUp';
 import List from './component/admin/List';
-import MyPage from './component/common/MyPage';
+import MyPage from './component/member/MyPage';
 import Main from './component/common/Main';
 import Admin from './component/admin/Admin';
 import Detail from './component/member/Detail';
@@ -59,7 +59,7 @@ const App = () => {
 				<Route path="/" exact element={<Main userData={userData} />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/members" element={<List userData={userData} />} />
-        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/mypage" element={<MyPage userData={userData} />} />
 				<Route path="/members/:id" element={<Detail />} /> {/* 회원 상세 페이지 */}
 				<Route path="/members/edit/:id" element={<Edit userData={userData}/>} /> {/* 회원 수정 페이지 */}
 				<Route 
