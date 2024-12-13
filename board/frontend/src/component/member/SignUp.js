@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -48,11 +49,21 @@ const Button = styled.button`
   }
 `;
 
+const Select = styled.select`
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.8rem 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+`;
+
 const SignUp = () => {
 	const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
+		role: ''
   });
 
 	const [message, setMessage] = useState('');
@@ -65,6 +76,8 @@ const SignUp = () => {
     });
   };
 
+	const navi = useNavigate();
+
 	const handleSubmit = async (e) => {
     e.preventDefault();
     // 회원가입 처리 로직을 추가하면 됩니다.
@@ -76,8 +89,9 @@ const SignUp = () => {
       const response = await axios.post('http://localhost:8011/api/members/', formData);
 
       setMessage(response.data); // 성공 메시지
+			navi('/login');
     } catch (error) {
-      setMessage('Error during registration'); // 에러 메시지
+      setMessage(error.response.data); // 에러 메시지
     }
   };
 
@@ -93,6 +107,7 @@ const SignUp = () => {
             placeholder="Full Name"
             value={formData.name}
             onChange={handleChange}
+						required
           />
           <Input
             type="email"
@@ -100,6 +115,7 @@ const SignUp = () => {
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
+						required
           />
           <Input
             type="password"
@@ -107,7 +123,13 @@ const SignUp = () => {
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
+						required
           />
+					<Select name="role" required onChange={handleChange}>
+						<option value="">===select role===</option>
+						<option value="user">user</option>
+						<option value="admin">admin</option>
+					</Select>
           <Button type="submit">Sign Up</Button>
         </form>
 				{message && <p>{message}</p>}

@@ -33,7 +33,16 @@ const Button = styled.button`
   }
 `;
 
-const Edit = () => {
+const Select = styled.select`
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.8rem 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+`;
+
+const Edit = ( { userData } ) => {
   const { id } = useParams(); // URL에서 ID 추출
   const navigate = useNavigate();
 
@@ -113,6 +122,25 @@ const Edit = () => {
             onChange={handleInputChange}
           />
         </div>
+				{userData.role === "superAdmin" ? (
+					<>
+					<div>
+						<label>Role:</label>
+						<Select
+							name="role"
+							value={member.role}
+							onChange={handleInputChange}
+						>
+							<option value="user">user</option>
+							<option value="admin">admin</option>
+							<option value="superAdmin">superAdmin</option>
+						</Select>
+					</div>
+					</>
+				) : (
+					<>
+					</>
+				)}
         <Button type="submit">Update</Button>
       </form>
     </EditContainer>

@@ -2,69 +2,59 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const Login = ( { setUserData, setSessionTime } ) => {
-  const [id, setId] = useState('');
-  const [password, setPassword] = useState('');
+const PwdReset = (  ) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
 	const navi = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handlePwdRest = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8011/api/login/', { 
-        id, 
-        password 
-      }, { withCredentials: true });
+      const response = await axios.post('http://localhost:8011/api/find/', { 
+        name, 
+        email 
+      });
 
-      setMessage(response.data.statMsg);
+			alert(response.data);
+			navi('/login');
 			
-			if(response.data.statCd === '200') {
-				setUserData(response.data.member);
-				setSessionTime(response.data.timeout);
-				alert(id + '님 로그인 하셨습니다.');
-				navi('/'); // 로그인 성공 시 메인 페이지로 이동
-			} else {
-				return;
-			}
     } catch (error) {
-      setMessage('로그인 실패: 아이디 또는 비밀번호가 잘못되었습니다.');
+      setMessage(error.response.data);
     }
   };
 
   return (
     <div style={styles.container}>
 			<div style={styles.card}>
-				<h1 style={styles.title}>Login</h1>
-				<form onSubmit={handleLogin} style={styles.form}>
+				<h1 style={styles.title}>Reset Password</h1>
+				<form onSubmit={handlePwdRest} style={styles.form}>
 					<div style={styles.inputGroup}>
-						<label style={styles.label}>ID: </label>
+						<label style={styles.label}>Name: </label>
 						<input 
 							type="text" 
-							value={id} 
-							onChange={(e) => setId(e.target.value)} 
+							value={name} 
+							onChange={(e) => setName(e.target.value)} 
 							required 
 							style={styles.input}
 						/>
 					</div>
 					<div style={styles.inputGroup}>
-						<label style={styles.label}>Password: </label>
+						<label style={styles.label}>Email: </label>
 						<input 
-							type="password" 
-							value={password} 
-							onChange={(e) => setPassword(e.target.value)} 
+							type="email" 
+							value={email} 
+							onChange={(e) => setEmail(e.target.value)} 
 							required 
 							style={styles.input}
 						/>
 					</div>
 					
 					{message && <p>{message}</p>}
-					<button type="submit" style={styles.button}>Login</button>
+					<button type="submit" style={styles.button}>Reset</button>
 				</form>
-				<button style={styles.forgetPassword} onClick={() => navi('/pwdReset')}>
-          Forget Password?
-        </button>
 			</div>
     </div>
   );
@@ -143,4 +133,4 @@ const styles = {
   },
 };
 
-export default Login;
+export default PwdReset;
