@@ -17,7 +17,6 @@ public class Member {
     private String password;
 
     @Column(nullable = false)
-    @ColumnDefault("user")
     private String role; // superAdmin, admin, manager, user
 
     // 기본 생성자
