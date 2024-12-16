@@ -117,8 +117,8 @@ const MyPage = ( { userData } ) => {
           <Input
             type="password"
             name="password"
+            value={member.password}
             onChange={handleInputChange}
-            required
           />
         </div>
 				{userData.role === "superAdmin" ? (
