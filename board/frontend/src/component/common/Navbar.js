@@ -59,14 +59,15 @@ const Navbar = ( { userData, sessionTime } ) => {
           <span>Logged in as: {userData.name}, sessionTime Left: {sessionTime}s</span>
 					<NavLink to="/mypage">MyPage</NavLink>
 					<NavLink to="/logout">Logout</NavLink>
+					<NavLink to="/board/lists">Board List</NavLink>
 					{userData.role === "superAdmin" ? (
 						<>
 						<NavLink to="/admin" userData={userData}>Admin</NavLink>
-						<NavLink to="/lists" userData={userData}>List</NavLink>
+						<NavLink to="/member/lists" userData={userData}>Member List</NavLink>
 						</>
 					) : (
 								<>
-								{userData.role === "admin" ? (<><NavLink to="/lists" userData={userData}>List</NavLink></>) : (<></>)}
+								{userData.role === "admin" ? (<><NavLink to="/member/lists" userData={userData}>Member List</NavLink></>) : (<></>)}
 								</>
 							)}
 					</>

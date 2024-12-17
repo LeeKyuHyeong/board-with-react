@@ -18,6 +18,10 @@ import Edit from './component/member/Edit';
 import Login from './component/login/Login';
 import Logout from './component/login/Logout';
 import PwdReset from './component/member/PwdReset';
+import BoardCreate from './component/board/BoardCreate';
+import BoardList from './component/board/List'
+import BoardDeatil from './component/board/Detail'
+import BoardEdit from './component/board/Edit'
 
 const App = () => {
 	const [userData, setUserData] = useState(null); // 사용자 정보
@@ -57,7 +61,7 @@ const App = () => {
       <Routes>
 				<Route path="/" exact element={<Main userData={userData} />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/lists" element={<List userData={userData} />} />
+        <Route path="/member/lists" element={<List userData={userData} />} />
         <Route path="/mypage" element={<MyPage userData={userData} />} />
 				<Route path="/members/" element={<Navigate to="/" replace />} /> {/*회원 상세 페이지 오류 리다이렉트*/}
 				<Route path="/members/:id" element={<Detail />} /> {/* 회원 상세 페이지 */}
@@ -69,6 +73,11 @@ const App = () => {
 				<Route path="/logout" element={<Logout setUserData={setUserData} />} />
 				<Route path="/admin" element={<Admin userData={userData} /> } />
 				<Route path="/pwdReset" element={<PwdReset  /> } />
+				{/* 게시판 */}
+				<Route path="/board/lists" element={<BoardList  /> } />
+				<Route path="/board/create" element={<BoardCreate  /> } />
+				<Route path="/board/:id" element={<BoardDeatil  /> } />
+				<Route path="/board/edit/:id" element={<BoardEdit  /> } />
       </Routes>
 		</>
   );
