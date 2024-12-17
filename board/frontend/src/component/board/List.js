@@ -27,6 +27,7 @@ const List = () => {
             <th style={styles.th}>Title</th>
             <th style={styles.th}>Author</th>
             <th style={styles.th}>Created Dt</th>
+						<th style={styles.th}>Views</th>
           </tr>
         </thead>
         <tbody>
@@ -40,6 +41,7 @@ const List = () => {
               </td>
               <td style={styles.td}>{board.author}</td>
               <td style={styles.td}>{new Date(board.createdDt).toLocaleString()}</td>
+							<td style={styles.td}>{board.viewCount}</td>
             </tr>
           ))}
         </tbody>
