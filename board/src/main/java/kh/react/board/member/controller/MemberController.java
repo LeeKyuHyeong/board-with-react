@@ -97,6 +97,7 @@ public class MemberController {
 //        if (findMember != null && (member.getPassword().equals(findMember.getPassword()))) {
             // 로그인 성공, 세션에 사용자 정보 저장
             request.getSession().setAttribute("member", findMember);
+            request.getSession().setAttribute("userId", findMember.getId().toString());
             timeout = request.getSession().getMaxInactiveInterval(); // 세션 유지 시간 (초)
 
             statCd = "200";
