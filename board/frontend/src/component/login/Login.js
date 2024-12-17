@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from "js-cookie";
 
 const Login = ( { setUserData, setSessionTime } ) => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+	const [rememberId, setRememberId] = useState(false); // 아이디 저장 체크박스
 
 	const navi = useNavigate();
+
+	// 페이지 로드 시 쿠키에서 ID 가져오기
+	useEffect(() => {
+		const savedId = Cookies.get("rememberedId");
+		if (savedId) {
+			setId(savedId);
+			setRememberId(true);
+		}
+	}, []);
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,6 +33,13 @@ const Login = ( { setUserData, setSessionTime } ) => {
       setMessage(response.data.statMsg);
 			
 			if(response.data.statCd === '200') {
+
+				if (rememberId) {
+					Cookies.set("rememberedId", id, { expires: 7 }); // 7일간 유지
+				} else {
+					Cookies.remove("rememberedId"); // 체크 해제 시 쿠키 삭제
+				}
+
 				setUserData(response.data.member);
 				setSessionTime(response.data.timeout);
 				alert(id + '님 로그인 하셨습니다.');
@@ -58,7 +77,14 @@ const Login = ( { setUserData, setSessionTime } ) => {
 							style={styles.input}
 						/>
 					</div>
-					
+					<div style={styles.checkboxGroup}>
+						<input
+							type="checkbox"
+							checked={rememberId}
+							onChange={() => setRememberId(!rememberId)}
+						/>
+						<label>Remember ID</label>
+					</div>
 					{message && <p>{message}</p>}
 					<button type="submit" style={styles.button}>Login</button>
 				</form>
