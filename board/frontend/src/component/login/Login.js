@@ -40,6 +40,8 @@ const Login = ( { setUserData, setSessionTime } ) => {
 					Cookies.remove("rememberedId"); // 체크 해제 시 쿠키 삭제
 				}
 
+				localStorage.setItem("loggedInUser", id); // 사용자 ID 저장
+				
 				setUserData(response.data.member);
 				setSessionTime(response.data.timeout);
 				alert(id + '님 로그인 하셨습니다.');
