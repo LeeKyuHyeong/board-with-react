@@ -8,6 +8,9 @@ const Detail = () => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
 	const [loggedInUser, setLoggedInUser] = useState(""); // 로그인된 사용자 ID
+	const [editingCommentId, setEditingCommentId] = useState(null); // 수정 중인 댓글 ID
+  const [updatedContent, setUpdatedContent] = useState(""); // 수정할 내용
+
   const navigate = useNavigate();
 
 	const fetchComments = useCallback(async () => {
@@ -78,9 +81,27 @@ const Detail = () => {
     }
   };
 
+	const handleDeleteComment = (commentId) => {
+    axios
+      .delete(`/api/comments/${commentId}`)
+      .then(() => fetchComments())
+      .catch(() => alert("Failed to delete comment."));
+  };
+
   if (!board) {
     return <p>Loading...</p>;
   }
+
+	const handleUpdateComment = (commentId) => {
+    axios
+      .put(`/api/comments/${commentId}`, { content: updatedContent })
+      .then(() => {
+        setEditingCommentId(null); // 수정 모드 종료
+        setUpdatedContent("");
+        fetchComments();
+      })
+      .catch(() => alert("Failed to update comment."));
+  };
 
   return (
     <div style={styles.container}>
@@ -124,22 +145,50 @@ const Detail = () => {
           <strong>Created Dt:</strong>{" "}
           {new Date(board.createdDt).toLocaleString()}
         </p>
-				</div>
+			</div>
 
 				{/* 댓글 입력 폼 */}
 				<div style={styles.commentSection}>
             <h3>Comments</h3>
             {comments.map((comment) => (
               <div key={comment.id} style={styles.comment}>
-                <p>
-                  <strong>{comment.author}</strong>: {comment.content}
-                </p>
-                <span style={styles.commentDate}>
-                  {new Date(comment.createdDt).toLocaleString()}
-                </span>
+                {editingCommentId === comment.id ? (
+                  // 댓글 수정 모드
+                  <>
+                    <textarea
+                      value={updatedContent}
+                      onChange={(e) => setUpdatedContent(e.target.value)}
+                      rows="2"
+                      style={styles.editTextarea}
+                    />
+                    <button onClick={() => handleUpdateComment(comment.id)}>Save</button>
+                    <button onClick={() => setEditingCommentId(null)}>Cancel</button>
+                  </>
+                ) : (
+                  // 댓글 보기 모드
+                  <>
+                    <p>
+                      <strong>{comment.author}</strong>: {comment.content}
+                    </p>
+                    <span style={styles.commentDate}>
+                      {new Date(comment.createdDt).toLocaleString()}
+                    </span>
+                    {loggedInUser === comment.author && (
+                      <div>
+                        <button onClick={() => {
+                          setEditingCommentId(comment.id);
+                          setUpdatedContent(comment.content);
+                        }}>
+                          Edit
+                        </button>
+                        <button onClick={() => handleDeleteComment(comment.id)}>Delete</button>
+                      </div>
+                    )}
+                  </>
+                )}
               </div>
             ))}
-
+            {/* 댓글 작성 */}
             <div style={styles.commentInput}>
               <textarea
                 value={newComment}
@@ -223,6 +272,9 @@ const styles = {
     flexDirection: "column",
     marginTop: "10px",
   },
+	editTextarea: { 
+		width: "100%", 
+		marginBottom: "10px" },
 };
 
 export default Detail;
