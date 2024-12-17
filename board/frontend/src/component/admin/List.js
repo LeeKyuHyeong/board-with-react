@@ -138,7 +138,7 @@ const List = ( { userData } ) => {
 			try {
 				await axios.delete(`http://localhost:8011/api/admin/members/${id}`);
 				setMembers(members.filter((member) => member.id !== id)); // 삭제된 회원을 리스트에서 제거
-				window.location.reload();
+				// window.location.reload();
 			} catch (error) {
 				alert('Failed to delete member');
 			}

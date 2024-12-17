@@ -88,7 +88,7 @@ const SignUp = () => {
 
       const response = await axios.post('http://localhost:8011/api/members/', formData);
 
-      setMessage(response.data); // 성공 메시지
+      alert(response.data); // 성공 메시지
 			navi('/login');
     } catch (error) {
       setMessage(error.response.data); // 에러 메시지

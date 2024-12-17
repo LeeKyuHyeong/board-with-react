@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -97,6 +97,8 @@ const List = () => {
   const [size, setSize] = useState(3); // 페이지 크기 (한 번에 보여줄 사용자 수)
   const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
 
+	const navi = useNavigate();
+
 	// 페이지 로드 시 기본적으로 모든 회원을 가져오기
 	useEffect(() => {
 		fetchMembers('', '');  // 초기값은 빈 문자열로 전체 회원 조회
@@ -143,7 +145,8 @@ const List = () => {
 			try {
 				await axios.delete(`http://localhost:8011/api/members/${id}`);
 				setMembers(members.filter((member) => member.id !== id)); // 삭제된 회원을 리스트에서 제거
-				window.location.reload();
+				// window.location.reload();
+				// navi('/member/lists')
 			} catch (error) {
 				alert('Failed to delete member');
 			}
