@@ -1,6 +1,10 @@
 import React from 'react';
+import { useLocation } from "react-router-dom";
 
 const Main = ( {userData} ) => {
+	const location = useLocation();
+	const errorMessage = location.state?.error || "";
+
 	return (
 		<div style={styles.container}>
 			<h1 style={styles.title}>Welcome to the Home Page</h1> 
@@ -9,6 +13,7 @@ const Main = ( {userData} ) => {
       ) : (
         <p>Please log in to access more features.</p>
       )}
+			{errorMessage && <p style={styles.error}>{errorMessage}</p>}
 		</div>
 	);
 };

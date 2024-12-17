@@ -83,8 +83,7 @@ const SizeSpan = styled.span`
 const SizeSelect = styled.select`
   padding: 0.5rem;
   margin: 0.5rem;
-  border-radius: 4px;
-	
+  border-radius: 4px;	
 `;
 
 const List = ( { userData } ) => {
@@ -99,7 +98,6 @@ const List = ( { userData } ) => {
 
 	// 페이지 로드 시 기본적으로 모든 회원을 가져오기
 	useEffect(() => {
-		
 			fetchMembers('', '');  // 초기값은 빈 문자열로 전체 회원 조회
 	}, []);
 
@@ -117,7 +115,6 @@ const List = ( { userData } ) => {
 			setLoading(false);
 		}
 	};
-
 	
 	// 검색 버튼 클릭 시
   const handleSearch = () => {

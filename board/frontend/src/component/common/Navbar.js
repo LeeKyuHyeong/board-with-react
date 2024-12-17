@@ -62,11 +62,11 @@ const Navbar = ( { userData, sessionTime } ) => {
 					{userData.role === "superAdmin" ? (
 						<>
 						<NavLink to="/admin" userData={userData}>Admin</NavLink>
-						<NavLink to="/members" userData={userData}>List</NavLink>
+						<NavLink to="/lists" userData={userData}>List</NavLink>
 						</>
 					) : (
 								<>
-								{userData.role === "admin" ? (<><NavLink to="/members" userData={userData}>List</NavLink></>) : (<></>)}
+								{userData.role === "admin" ? (<><NavLink to="/lists" userData={userData}>List</NavLink></>) : (<></>)}
 								</>
 							)}
 					</>

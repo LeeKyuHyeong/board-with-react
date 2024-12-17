@@ -54,9 +54,22 @@ const Edit = ( { userData } ) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+	if(!userData) {
+		navigate(-1);
+	}
+
   useEffect(() => {
     const fetchMember = async () => {
       try {
+
+				if (!id) {
+					setError("Invalid access: ID is required.");
+					setTimeout(() => {
+						navigate("/", { state: { error: "Invalid access: ID is required." } });
+					}, 2000); // 2초 후 메인 페이지로 이동
+					return;
+				}
+
         const response = await axios.get(`http://localhost:8011/api/members/${id}`);
         setMember(response.data);
         setLoading(false);
@@ -67,7 +80,7 @@ const Edit = ( { userData } ) => {
     };
 
     fetchMember();
-  }, [id]);
+  }, [id, navigate]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -118,7 +131,6 @@ const Edit = ( { userData } ) => {
           <Input
             type="password"
             name="password"
-            value={member.password}
             onChange={handleInputChange}
           />
         </div>

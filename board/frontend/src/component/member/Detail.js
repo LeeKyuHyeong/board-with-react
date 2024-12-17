@@ -42,9 +42,17 @@ const Detail = () => {
   const [error, setError] = useState('');
 
   const { id } = useParams(); // URL에서 id를 받아옵니다.
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
+		if (!id) {
+			setError("Invalid access: ID is required.");
+			setTimeout(() => {
+				navigate("/", { state: { error: "Invalid access: ID is required." } });
+			}, 2000); // 2초 후 메인 페이지로 이동
+			return;
+		}
+
     const fetchMemberDetail = async () => {
       try {
         const response = await axios.get(`http://localhost:8011/api/members/${id}`);
@@ -57,10 +65,10 @@ const Detail = () => {
     };
 
     fetchMemberDetail();
-  }, [id]);
+  }, [id, navigate]);
 
   const goBack = () => {
-    Navigate('/members'); // /members 페이지로 돌아가기
+    navigate('/lists'); // /members 페이지로 돌아가기
   };
 
   if (loading) return <div>Loading...</div>;
@@ -78,7 +86,7 @@ const Detail = () => {
             <DetailLabel>Email:</DetailLabel>{member.email}
           </DetailRow>
           <DetailRow>
-            <DetailLabel>Password:</DetailLabel>{member.password}
+            <DetailLabel>Password:</DetailLabel>
           </DetailRow>
           {/* 추가적인 회원 상세 정보를 여기에 표시할 수 있습니다. */}
 

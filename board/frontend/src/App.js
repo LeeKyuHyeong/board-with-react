@@ -4,6 +4,7 @@ import {
 	NavLink, 
 	Route, 
 	Routes, 
+	Navigate,
 	} from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './component/common/Navbar';
@@ -32,7 +33,6 @@ const App = () => {
           return 0;
         });
       }, 1000);
-
       return () => clearInterval(timer); // 컴포넌트 언마운트 시 타이머 정리
     }
   }, [sessionTime]);
@@ -49,7 +49,6 @@ const App = () => {
         setUserData(null); // 사용자 데이터 초기화
       }
     };
-
     handleSessionTimeout();
   }, [sessionTime]);
   return (
@@ -58,8 +57,9 @@ const App = () => {
       <Routes>
 				<Route path="/" exact element={<Main userData={userData} />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/members" element={<List userData={userData} />} />
+        <Route path="/lists" element={<List userData={userData} />} />
         <Route path="/mypage" element={<MyPage userData={userData} />} />
+				<Route path="/members/" element={<Navigate to="/" replace />} /> {/*회원 상세 페이지 오류 리다이렉트*/}
 				<Route path="/members/:id" element={<Detail />} /> {/* 회원 상세 페이지 */}
 				<Route path="/members/edit/:id" element={<Edit userData={userData}/>} /> {/* 회원 수정 페이지 */}
 				<Route 
