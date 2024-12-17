@@ -44,4 +44,33 @@ public class CommentController {
         List<Comment> comments = commentRepository.findByBoardId(boardId);
         return ResponseEntity.ok(comments);
     }
+
+    // 댓글 수정
+    @PutMapping("/{commentId}")
+    public ResponseEntity<?> updateComment(@PathVariable Long commentId, @RequestBody Comment updatedComment, HttpSession session) {
+        String loggedInUser = (String) session.getAttribute("userId");
+
+        return commentRepository.findById(commentId).map(comment -> {
+            if (!comment.getAuthor().equals(loggedInUser)) {
+                return ResponseEntity.status(403).body("You are not authorized to update this comment.");
+            }
+            comment.setContent(updatedComment.getContent());
+            commentRepository.save(comment);
+            return ResponseEntity.ok("Comment updated successfully");
+        }).orElse(ResponseEntity.status(404).body("Comment not found"));
+    }
+
+    // 댓글 삭제
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<?> deleteComment(@PathVariable Long commentId, HttpSession session) {
+        String loggedInUser = (String) session.getAttribute("userId");
+
+        return commentRepository.findById(commentId).map(comment -> {
+            if (!comment.getAuthor().equals(loggedInUser)) {
+                return ResponseEntity.status(403).body("You are not authorized to delete this comment.");
+            }
+            commentRepository.delete(comment);
+            return ResponseEntity.ok("Comment deleted successfully");
+        }).orElse(ResponseEntity.status(404).body("Comment not found"));
+    }
 }
