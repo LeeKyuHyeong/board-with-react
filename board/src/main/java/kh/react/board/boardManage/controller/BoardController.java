@@ -45,9 +45,12 @@ public class BoardController {
     // 게시글 상세 조회
     @GetMapping("/board/{id}")
     public ResponseEntity<?> getBoardById(@PathVariable Long id) {
-        Optional<Board> board = boardRepository.findById(id);
-        if (board.isPresent()) {
-            return ResponseEntity.ok(board.get());
+        Optional<Board> boardOptional = boardRepository.findById(id);
+        if (boardOptional.isPresent()) {
+            Board board = boardOptional.get();
+            board.setViewCount(board.getViewCount() + 1); // 조회수 증가
+            boardRepository.save(board); // 변경사항 저장
+            return ResponseEntity.ok(board);
         } else {
             return ResponseEntity.status(404).body("Board not found");
         }

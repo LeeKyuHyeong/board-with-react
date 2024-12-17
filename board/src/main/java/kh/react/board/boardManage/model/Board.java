@@ -21,8 +21,12 @@ public class Board {
     @Column(nullable = false)
     private String author;
 
+    private int viewCount; // 조회수 필드 추가
+
     @Column(name = "created_dt", nullable = false, updatable = false)
     private LocalDateTime createdDt = LocalDateTime.now();
+
+    private LocalDateTime updatedAt;
 
     // Getters and Setters
     public Long getId() { return id; }
@@ -39,4 +43,12 @@ public class Board {
 
     public LocalDateTime getCreatedDt() { return createdDt; }
     public void setCreatedDt(LocalDateTime createdDt) { this.createdDt = createdDt; }
+
+    public int getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(int viewCount) {
+        this.viewCount = viewCount;
+    }
 }
