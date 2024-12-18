@@ -46,6 +46,9 @@ const List = () => {
           ))}
         </tbody>
       </table>
+			<Link to={'/board/create/'} style={styles.link}>
+				Add Board
+			</Link>
     </div>
   );
 };
