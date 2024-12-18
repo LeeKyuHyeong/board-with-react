@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import CommonUtils from "../common/CommonUtils";
 
 const Detail = () => {
   const { id } = useParams(); // URL에서 게시글 ID 추출
@@ -25,7 +26,11 @@ const Detail = () => {
     axios
       .get(`/api/board/${id}`)
       .then((response) => {
-        setBoard(response.data);
+				const decodedBoard = {
+					...response.data,
+					content: CommonUtils.decodeHtml(response.data.content),
+				};
+        setBoard(decodedBoard);
       })
       .catch((error) => {
         console.error("Error fetching board:", error);

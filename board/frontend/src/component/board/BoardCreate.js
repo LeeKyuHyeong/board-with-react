@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import CommonUtils from "../common/CommonUtils";
 
 const BoardCreate = () => {
   const [title, setTitle] = useState("");
@@ -22,13 +23,15 @@ const BoardCreate = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const boardData = { title, content, author };
+		const encodeContent = CommonUtils.encodeHtml(content);
+
+    const boardData = { title, content : encodeContent, author };
 
     axios
       .post("/api/board/", boardData)
       .then((response) => {
         alert("Board created successfully!");
-        navigate("/"); // 등록 후 메인 페이지 이동
+        navigate("/board/lists/"); // 등록 후 메인 페이지 이동
       })
       .catch((error) => {
         console.error("There was an error!", error);
