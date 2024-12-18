@@ -21,8 +21,9 @@ public class NaverNewsService {
     @Value("${naver.api.client-secret}")
     private String clientSecret;
 
-    public List<Map<String, Object>> getBaseballNews() {
-        String url = "https://openapi.naver.com/v1/search/news.json?query=야구&display=100&start=1&sort=sim";
+    public List<Map<String, Object>> getBaseballNews(int size) {
+
+        String url = "https://openapi.naver.com/v1/search/news.json?query=야구&start=1&sort=sim&display=" + size;
 
         // REST 요청 설정
         RestTemplate restTemplate = new RestTemplate();
@@ -47,16 +48,10 @@ public class NaverNewsService {
             // 한국 야구 관련 뉴스만 필터링
             for (int i = 0; i < items.length(); i++) {
                 JSONObject item = items.getJSONObject(i);
-
-                for(String s : item.keySet()) {
-                    System.out.println("key : " + s + ", value : " + item.get(s));
-                }
-
                 Map<String, Object> params = new HashMap<>();
 
                 String title = item.getString("title").replaceAll("<b>", " ").replaceAll("</b>", " ");
                 String description = item.getString("description").replaceAll("<b>", " ").replaceAll("</b>", " ");
-
                 String link = item.getString("link");
                 String originallink = item.getString("originallink");
                 String dt = item.getString("pubDate");
@@ -76,5 +71,57 @@ public class NaverNewsService {
         }
 
         return baseballNews;
+    }
+
+    public List<Map<String, Object>> getVolleyballNews(int size) {
+
+        String url = "https://openapi.naver.com/v1/search/news.json?query=배구&start=1&sort=sim&display=" + size;
+
+        // REST 요청 설정
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-Naver-Client-Id", clientId);
+        headers.set("X-Naver-Client-Secret", clientSecret);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                String.class
+        );
+
+        // 응답 데이터 처리
+        List<Map<String, Object>> volleyballNews = new ArrayList<>();
+        if (response.getStatusCode() == HttpStatus.OK) {
+            JSONObject jsonResponse = new JSONObject(response.getBody());
+            JSONArray items = jsonResponse.getJSONArray("items");
+
+            // 한국 야구 관련 뉴스만 필터링
+            for (int i = 0; i < items.length(); i++) {
+                JSONObject item = items.getJSONObject(i);
+                Map<String, Object> params = new HashMap<>();
+
+                String title = item.getString("title").replaceAll("<b>", " ").replaceAll("</b>", " ");
+                String description = item.getString("description").replaceAll("<b>", " ").replaceAll("</b>", " ");
+                String link = item.getString("link");
+                String originallink = item.getString("originallink");
+                String dt = item.getString("pubDate");
+
+                // 한국 야구 관련 키워드로 필터링
+                if (title.contains("여자 배구") || title.contains("한국 배구") || title.contains("남자 배구") || title.contains("kovo") || title.contains("KOVO") ) {
+
+                    params.put("title", title);
+                    params.put("link", link);
+                    params.put("description", description);
+                    params.put("originallink", originallink);
+                    params.put("dt", dt);
+
+                    volleyballNews.add(params);
+                }
+            }
+        }
+
+        return volleyballNews;
     }
 }
