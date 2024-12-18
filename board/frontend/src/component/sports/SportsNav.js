@@ -1,5 +1,5 @@
 // Navbar.js
-import React, { useState } from 'react';
+import React, {  } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -34,7 +34,7 @@ const Navbar = () => {
       <NavLinks>
 				<NavLink to="/baseball">Baseball</NavLink>
 				<NavLink to="/volleyball">Volleyball</NavLink>
-				<NavLink to="/baseball">Soccer</NavLink>
+				<NavLink to="/soccer">Soccer</NavLink>
       </NavLinks>
     </NavbarContainer>
   );

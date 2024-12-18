@@ -24,6 +24,7 @@ import BoardDeatil from './component/board/Detail'
 import BoardEdit from './component/board/Edit'
 import Baseball from './component/sports/Baseball';
 import Volleyball from './component/sports/Volleyball';
+import Soccer from './component/sports/Soccer';
 
 const App = () => {
 	const [userdata, setUserdata] = useState(null); // 사용자 정보
@@ -83,6 +84,7 @@ const App = () => {
 				{/* 스포츠 */}
 				<Route path="/baseball" element={<Baseball  /> } />
 				<Route path="/volleyball" element={<Volleyball  /> } />
+				<Route path="/soccer" element={<Soccer  /> } />
       </Routes>
 		</>
   );
