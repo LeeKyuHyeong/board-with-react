@@ -42,7 +42,7 @@ const Select = styled.select`
   font-size: 1rem;
 `;
 
-const Edit = ( { userData } ) => {
+const Edit = ( { userdata } ) => {
   const { id } = useParams(); // URL에서 ID 추출
   const navigate = useNavigate();
 
@@ -54,7 +54,7 @@ const Edit = ( { userData } ) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-	if(!userData) {
+	if(!userdata) {
 		navigate(-1);
 	}
 
@@ -134,7 +134,7 @@ const Edit = ( { userData } ) => {
             onChange={handleInputChange}
           />
         </div>
-				{userData.role === "superAdmin" ? (
+				{userdata.role === "superAdmin" ? (
 					<>
 					<div>
 						<label>Role:</label>

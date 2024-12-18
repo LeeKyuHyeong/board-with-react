@@ -23,9 +23,10 @@ import BoardList from './component/board/List'
 import BoardDeatil from './component/board/Detail'
 import BoardEdit from './component/board/Edit'
 import Baseball from './component/sports/Baseball';
+import Volleyball from './component/sports/Volleyball';
 
 const App = () => {
-	const [userData, setUserData] = useState(null); // 사용자 정보
+	const [userdata, setUserdata] = useState(null); // 사용자 정보
   const [sessionTime, setSessionTime] = useState(null); // 남은 세션 시간
 	
 	// 세션 시간 감소 타이머
@@ -51,36 +52,37 @@ const App = () => {
         } catch (error) {
           console.error("Logout failed", error);
         }
-        setUserData(null); // 사용자 데이터 초기화
+        setUserdata(null); // 사용자 데이터 초기화
       }
     };
     handleSessionTimeout();
   }, [sessionTime]);
   return (
 		<>
-      <Navbar userData={userData} sessionTime={sessionTime} />
+      <Navbar userdata={userdata} sessionTime={sessionTime} />
       <Routes>
-				<Route path="/" exact element={<Main userData={userData} />} />
+				<Route path="/" exact element={<Main userdata={userdata} />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/member/lists" element={<List userData={userData} />} />
-        <Route path="/mypage" element={<MyPage userData={userData} />} />
+        <Route path="/member/lists" element={<List userdata={userdata} />} />
+        <Route path="/mypage" element={<MyPage userdata={userdata} />} />
 				<Route path="/members/" element={<Navigate to="/" replace />} /> {/*회원 상세 페이지 오류 리다이렉트*/}
 				<Route path="/members/:id" element={<Detail />} /> {/* 회원 상세 페이지 */}
-				<Route path="/members/edit/:id" element={<Edit userData={userData}/>} /> {/* 회원 수정 페이지 */}
+				<Route path="/members/edit/:id" element={<Edit userdata={userdata}/>} /> {/* 회원 수정 페이지 */}
 				<Route 
 					path="/login" 
-					element={!userData ? <Login setUserData={setUserData} setSessionTime={setSessionTime} /> : <NavLink to="/" />}
+					element={!userdata ? <Login setUserdata={setUserdata} setSessionTime={setSessionTime} /> : <NavLink to="/" />}
 					/>
-				<Route path="/logout" element={<Logout setUserData={setUserData} />} />
-				<Route path="/admin" element={<Admin userData={userData} /> } />
+				<Route path="/logout" element={<Logout setUserdata={setUserdata} />} />
+				<Route path="/admin" element={<Admin userdata={userdata} /> } />
 				<Route path="/pwdReset" element={<PwdReset  /> } />
 				{/* 게시판 */}
 				<Route path="/board/lists" element={<BoardList  /> } />
 				<Route path="/board/create" element={<BoardCreate  /> } />
 				<Route path="/board/:id" element={<BoardDeatil  /> } />
 				<Route path="/board/edit/:id" element={<BoardEdit  /> } />
-				{/* 야구 */}
+				{/* 스포츠 */}
 				<Route path="/baseball" element={<Baseball  /> } />
+				<Route path="/volleyball" element={<Volleyball  /> } />
       </Routes>
 		</>
   );

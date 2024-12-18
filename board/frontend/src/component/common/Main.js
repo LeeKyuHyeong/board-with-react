@@ -1,15 +1,15 @@
 import React from 'react';
 import { useLocation } from "react-router-dom";
 
-const Main = ( {userData} ) => {
+const Main = ( {userdata} ) => {
 	const location = useLocation();
 	const errorMessage = location.state?.error || "";
 
 	return (
 		<div style={styles.container}>
 			<h1 style={styles.title}>Welcome to the Home Page</h1> 
-      {userData ? (
-        <p>Hello, {userData.name}! You are logged in.</p>
+      {userdata ? (
+        <p>Hello, {userdata.name}! You are logged in.</p>
       ) : (
         <p>Please log in to access more features.</p>
       )}

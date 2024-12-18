@@ -42,7 +42,7 @@ const Select = styled.select`
   font-size: 1rem;
 `;
 
-const MyPage = ( { userData } ) => {
+const MyPage = ( { userdata } ) => {
   const navigate = useNavigate();
 
   const [member, setMember] = useState({
@@ -56,7 +56,7 @@ const MyPage = ( { userData } ) => {
   useEffect(() => {
     const fetchMember = async () => {
       try {
-        const response = await axios.get(`http://localhost:8011/api/members/${userData.id}`);
+        const response = await axios.get(`http://localhost:8011/api/members/${userdata.id}`);
         setMember(response.data);
         setLoading(false);
       } catch (error) {
@@ -66,7 +66,7 @@ const MyPage = ( { userData } ) => {
     };
 
     fetchMember();
-  }, [userData.id]);
+  }, [userdata.id]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -79,7 +79,7 @@ const MyPage = ( { userData } ) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8011/api/members/${userData.id}`, member);
+      await axios.put(`http://localhost:8011/api/members/${userdata.id}`, member);
       alert('Member updated successfully');
       navigate(`/myPage/`); // 수정 후 상세 페이지로 이동
     } catch (error) {
@@ -121,7 +121,7 @@ const MyPage = ( { userData } ) => {
             onChange={handleInputChange}
           />
         </div>
-				{userData.role === "superAdmin" ? (
+				{userdata.role === "superAdmin" ? (
 					<>
 					<div>
 						<label>Role:</label>

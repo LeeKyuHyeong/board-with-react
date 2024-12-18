@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from "js-cookie";
 
-const Login = ( { setUserData, setSessionTime } ) => {
+const Login = ( { setUserdata, setSessionTime } ) => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -42,7 +42,7 @@ const Login = ( { setUserData, setSessionTime } ) => {
 
 				localStorage.setItem("loggedInUser", id); // 사용자 ID 저장
 				
-				setUserData(response.data.member);
+				setUserdata(response.data.member);
 				setSessionTime(response.data.timeout);
 				alert(id + '님 로그인 하셨습니다.');
 				navi('/'); // 로그인 성공 시 메인 페이지로 이동

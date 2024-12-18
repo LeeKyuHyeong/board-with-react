@@ -86,7 +86,7 @@ const SizeSelect = styled.select`
   border-radius: 4px;	
 `;
 
-const List = ( { userData } ) => {
+const List = ( { userdata } ) => {
   const [members, setMembers] = useState([]);
 	const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -220,7 +220,7 @@ const List = ( { userData } ) => {
 							<TableData>{member.role}</TableData>
 							<TableData>
                 <Button><Link to={`/members/${member.id}`} style={{"color":"white", "textDecoration":"none"}}>View Details</Link></Button>
-								{userData.role === "superAdmin" ? (
+								{userdata.role === "superAdmin" ? (
 									<>
 									<Button onClick={() => handleDelete(member.id)}>Delete</Button>
 									<Button><Link to={`/members/edit/${member.id}`} style={{"color":"white", "textDecoration":"none"}}>Edit</Link></Button>

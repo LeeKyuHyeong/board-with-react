@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Admin = ( {userData} ) => {
+const Admin = ( {userdata} ) => {
   const [error, setError] = useState("");
 
 	const navi = useNavigate();
 
   useEffect(() => {
-		if(!userData) {
+		if(!userdata) {
 			navi('/');
 		}
-    if (userData.role !== "superAdmin") {
+    if (userdata.role !== "superAdmin") {
       setError("You are not authorized to view this page.");
       return;
     }   
-  }, [userData, navi]);
+  }, [userdata, navi]);
 
   if (error) {
     return <div>{error}</div>;
