@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import CommonUtils from "../common/CommonUtils";
 
 const Edit = () => {
   const { id } = useParams(); // URL에서 게시글 ID 추출
@@ -15,7 +16,7 @@ const Edit = () => {
       .get(`/api/board/${id}`)
       .then((response) => {
         setTitle(response.data.title);
-        setContent(response.data.content);
+        setContent(CommonUtils.decodeHtml(response.data.content));
       })
       .catch((error) => {
         console.error("Error fetching board:", error);
@@ -26,8 +27,11 @@ const Edit = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+		const encodeContent = CommonUtils.encodeHtml(content);
+
     axios
-      .put(`/api/board/${id}`, { title, content })
+      .put(`/api/board/${id}`, { title, content : encodeContent})
       .then(() => {
         alert("Board updated successfully.");
         navigate(`/board/${id}`); // 수정 후 상세 페이지로 이동

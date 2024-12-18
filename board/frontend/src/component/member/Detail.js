@@ -68,7 +68,7 @@ const Detail = () => {
   }, [id, navigate]);
 
   const goBack = () => {
-    navigate('/lists'); // /members 페이지로 돌아가기
+    navigate('/member/lists'); // /members 페이지로 돌아가기
   };
 
   if (loading) return <div>Loading...</div>;

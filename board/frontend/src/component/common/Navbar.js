@@ -37,6 +37,16 @@ const NavLink = styled(Link)`
   }
 `;
 
+const NavLinkLogout = styled(Link)`
+  text-decoration: none;
+  color: red;
+  font-size: 1rem;
+
+  &:hover {
+    color: #ddd;
+  }
+`;
+
 const MobileMenuIcon = styled.div`
   display: none;
 
@@ -48,29 +58,37 @@ const MobileMenuIcon = styled.div`
   }
 `;
 
-const Navbar = ( { userData, sessionTime } ) => {
+const UserNav = styled.span`
+	color: white;
+    /* font-size: 0.7rem; */
+    /* padding-top: 0.1rem; */
+    padding: 0.1rem;
+    border: 1px solid #d4d4d6;
+    line-height: 0.8rem;
+`;
+
+const LoggedInUserB = styled.b`
+	font-size: 1rem;
+`;
+
+const Navbar = ( { userdata, sessionTime } ) => {
 
   return (
     <NavbarContainer>
       <Logo><NavLink to="/" style={{"fontSize":"2rem"}}>MyApp</NavLink></Logo>
       <NavLinks>
-				{userData ? (
-					<>
-          <span>Logged in as: {userData.name}, sessionTime Left: {sessionTime}s</span>
-					<NavLink to="/baseball">Baseball</NavLink>
-					<NavLink to="/mypage">MyPage</NavLink>
-					<NavLink to="/logout">Logout</NavLink>
+			<NavLink to="/baseball">Sports</NavLink>
+				{userdata ? (
+					<>          
 					<NavLink to="/board/lists">Board List</NavLink>
-					{userData.role === "superAdmin" ? (
+					{userdata.role !== "user" ? (
 						<>
-						<NavLink to="/admin" userData={userData}>Admin</NavLink>
-						<NavLink to="/member/lists" userData={userData}>Member List</NavLink>
+						<NavLink to="/member/lists" userdata={userdata}>Member List</NavLink>
 						</>
-					) : (
-								<>
-								{userData.role === "admin" ? (<><NavLink to="/member/lists" userData={userData}>Member List</NavLink></>) : (<></>)}
-								</>
-							)}
+					) : (<></>)}
+					<NavLink to="/mypage">MyPage</NavLink>
+					<NavLinkLogout to="/logout">Logout</NavLinkLogout>
+					<UserNav><LoggedInUserB>{userdata.name}</LoggedInUserB> ({sessionTime}s)</UserNav>
 					</>
         ) : (
 					<>

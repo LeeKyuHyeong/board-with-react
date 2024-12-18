@@ -63,7 +63,7 @@ const styles = {
   },
 };
 
-const Baseball = ( {setActive} ) => {
+const Volleyball = () => {
   const [articles, setArticles] = useState([{}]);
 	const [loading, setLoading] = useState(true);
 	const [size, setSize] = useState(10);
@@ -71,10 +71,9 @@ const Baseball = ( {setActive} ) => {
   useEffect(() => {
 		const fetchNews = async () => {
       try {
-        await axios.get(`http://localhost:8011/api/news/baseball/${size}`)
+        await axios.get(`http://localhost:8011/api/news/volleyball/${size}`)
 				.then((response) => {
 					setArticles(response.data);
-					setActive("baseball");
 					setLoading(false);
 				})} catch (error) {
         console.error("Failed to fetch news", error);
@@ -84,7 +83,7 @@ const Baseball = ( {setActive} ) => {
 
     fetchNews();
 
-  }, [size, setActive]);
+  }, [size]);
 
 	if (loading) {
     return <div className="text-center mt-10">뉴스를 불러오는 중입니다...</div>;
@@ -98,7 +97,7 @@ const Baseball = ( {setActive} ) => {
 		<>
 			<SportsNav/>
 			<div style={styles.container}>
-				<h1 style={styles.header}>야구 관련 최신 뉴스<select name="size" onChange={(e) =>setSize(e.target.value)}><option value="10">10</option><option value="100">100</option></select></h1>
+				<h1 style={styles.header}>배구 관련 최신 뉴스<select name="size" onChange={(e) =>setSize(e.target.value)}><option value="10">10</option><option value="100">100</option></select></h1>
 				<div style={styles.grid}>
 					{articles.map((article, index) => (
 						<div
@@ -125,4 +124,4 @@ const Baseball = ( {setActive} ) => {
   );
 };
 
-export default Baseball;
+export default Volleyball;

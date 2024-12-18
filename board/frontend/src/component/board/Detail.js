@@ -45,7 +45,6 @@ const Detail = () => {
 			axios
       .get("/api/session/user/") // 로그인된 사용자 정보 가져오는 엔드포인트
       .then((response) => {
-				console.log('userId : ' + response.data.userId);
         setLoggedInUser(response.data.userId);
       })
       .catch((error) => {
@@ -110,7 +109,7 @@ const Detail = () => {
 
   return (
     <div style={styles.container}>
-      <h2>Board Detail
+      <h2 style={styles.detailTitle}>Board Detail
 				<div>
 					{/* 작성자와 로그인된 사용자가 같을 때만 수정 및 삭제 버튼 보여주기 */}
 					{loggedInUser === board.author && (
@@ -218,6 +217,10 @@ const styles = {
     margin: "20px auto",
     textAlign: "left",
   },
+	detailTitle: {
+		display: "flex",
+		justifyContent: "space-between",
+	},
   detailBox: {
     border: "1px solid #ddd",
     padding: "20px",
@@ -233,7 +236,6 @@ const styles = {
     margin: "10px 0",
   },
 	editButton: {
-    marginTop: "10px",
     marginRight: "10px",
     padding: "10px 15px",
     backgroundColor: "green",
@@ -243,7 +245,6 @@ const styles = {
     cursor: "pointer",
   },
 	deleteButton: {
-    marginTop: "10px",
     marginRight: "10px",
     padding: "10px 15px",
     backgroundColor: "#dc3545",
@@ -253,7 +254,6 @@ const styles = {
     cursor: "pointer",
   },
   button: {
-    marginTop: "20px",
     padding: "10px 15px",
     backgroundColor: "#007bff",
     color: "#fff",
