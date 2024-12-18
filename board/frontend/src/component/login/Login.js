@@ -135,7 +135,7 @@ const styles = {
     color: "#555",
   },
   input: {
-    width: "100%",
+    width: "93%",
     padding: "10px",
     fontSize: "14px",
     borderRadius: "5px",
