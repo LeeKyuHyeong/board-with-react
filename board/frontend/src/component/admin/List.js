@@ -48,6 +48,19 @@ const Button = styled.button`
   }
 `;
 
+const DeleteButton = styled.button`
+  padding: 0.5rem 1rem;
+  background-color: red;
+  color: yellow;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #555;
+  }
+`;
+
 const PageButton = styled.button`
   padding: 0.5rem;
   margin: 0.5rem;
@@ -212,7 +225,7 @@ const List = ( { userdata } ) => {
           </tr>
         </thead>
         <tbody>
-          {members.map((member, index) => (
+          {members.map((member) => (
             <tr key={member.id}>
 							<TableData>{member.name}</TableData>
               <TableData>{member.email}</TableData>
@@ -222,8 +235,8 @@ const List = ( { userdata } ) => {
                 <Button><Link to={`/members/${member.id}`} style={{"color":"white", "textDecoration":"none"}}>View Details</Link></Button>
 								{userdata.role === "superAdmin" ? (
 									<>
-									<Button onClick={() => handleDelete(member.id)}>Delete</Button>
 									<Button><Link to={`/members/edit/${member.id}`} style={{"color":"white", "textDecoration":"none"}}>Edit</Link></Button>
+                  <DeleteButton onClick={() => handleDelete(member.id)}>Delete</DeleteButton>
 									</>
 								) : (<></>)}
               </TableData>

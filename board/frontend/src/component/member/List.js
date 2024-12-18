@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -38,6 +38,19 @@ const Input = styled.input`
 const Button = styled.button`
   padding: 0.5rem 1rem;
   background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #555;
+  }
+`;
+
+const DeleteButton = styled.button`
+  padding: 0.5rem 1rem;
+  background-color: red;
   color: white;
   border: none;
   border-radius: 4px;
@@ -97,7 +110,6 @@ const List = () => {
   const [size, setSize] = useState(3); // 페이지 크기 (한 번에 보여줄 사용자 수)
   const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
 
-	const navi = useNavigate();
 
 	// 페이지 로드 시 기본적으로 모든 회원을 가져오기
 	useEffect(() => {
@@ -145,8 +157,6 @@ const List = () => {
 			try {
 				await axios.delete(`http://localhost:8011/api/members/${id}`);
 				setMembers(members.filter((member) => member.id !== id)); // 삭제된 회원을 리스트에서 제거
-				// window.location.reload();
-				// navi('/member/lists')
 			} catch (error) {
 				alert('Failed to delete member');
 			}
@@ -219,14 +229,14 @@ const List = () => {
           </tr>
         </thead>
         <tbody>
-          {members.map((member, index) => (
+          {members.map((member) => (
             <tr key={member.id}>
 							<TableData>{member.name}</TableData>
               <TableData>{member.email}</TableData>
               <TableData>{member.password}</TableData>
 							<TableData>
                 <Button><Link to={`/members/${member.id}`} style={{"color":"white", "textDecoration":"none"}}>View Details</Link></Button>
-                <Button onClick={() => handleDelete(member.id)}>Delete</Button>
+                <DeleteButton onClick={() => handleDelete(member.id)}>Delete</DeleteButton>
 								<Button><Link to={`/members/edit/${member.id}`} style={{"color":"white", "textDecoration":"none"}}>Edit</Link></Button>
               </TableData>
             </tr>
