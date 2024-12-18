@@ -57,6 +57,7 @@ const Navbar = ( { userData, sessionTime } ) => {
 				{userData ? (
 					<>
           <span>Logged in as: {userData.name}, sessionTime Left: {sessionTime}s</span>
+					<NavLink to="/baseball">Baseball</NavLink>
 					<NavLink to="/mypage">MyPage</NavLink>
 					<NavLink to="/logout">Logout</NavLink>
 					<NavLink to="/board/lists">Board List</NavLink>
