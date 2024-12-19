@@ -33,4 +33,9 @@ public class NaverNewsController {
     public List<Map<String, Object>> getSoccerNews(@PathVariable int size) {
         return naverNewsService.getSoccerNews(size);
     }
+
+    @GetMapping("/flowball/{size}")
+    public List<Map<String, Object>> getFlowballNews(@PathVariable int size) {
+        return naverNewsService.getFlowballNews(size);
+    }
 }
