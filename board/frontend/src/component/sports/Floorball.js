@@ -66,12 +66,12 @@ const styles = {
 const Flowball = () => {
   const [articles, setArticles] = useState([{}]);
 	const [loading, setLoading] = useState(true);
-	const [size, setSize] = useState(10);
+	const [size, setSize] = useState(100);
 
   useEffect(() => {
 		const fetchNews = async () => {
       try {
-        await axios.get(`http://localhost:8011/api/news/flowball/${size}`)
+        await axios.get(`http://localhost:8011/api/news/floorball/${size}`)
 				.then((response) => {
 					setArticles(response.data);
 					setLoading(false);
@@ -100,7 +100,15 @@ const Flowball = () => {
 		<>
 			<SportsNav/>
 			<div style={styles.container}>
-				<h1 style={styles.header}>플로우볼 관련 최신 뉴스<select name="size" onChange={(e) =>setSize(e.target.value)}><option value="10">10</option><option value="100">100</option></select></h1>
+				<h1 style={styles.header}>
+					플로어볼 관련 최신 뉴스
+					<select name="size" onChange={(e) =>setSize(e.target.value)} value={size}>
+						<option value="10">10</option>
+						<option value="80">80</option>
+						<option value="90">90</option>
+						<option value="100">100</option>
+					</select>
+				</h1>
 				<div style={styles.grid}>
 					{articles.map((article, index) => (
 						<div

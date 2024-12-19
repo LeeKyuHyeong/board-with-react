@@ -100,7 +100,15 @@ const Baseball = () => {
 		<>
 			<SportsNav/>
 			<div style={styles.container}>
-				<h1 style={styles.header}>야구 관련 최신 뉴스<select name="size" onChange={(e) =>setSize(e.target.value)}><option value="10">10</option><option value="100">100</option></select></h1>
+				<h1 style={styles.header}>
+					야구 관련 최신 뉴스
+					<select name="size" onChange={(e) =>setSize(e.target.value)} value={size}>
+						<option value="10">10</option>
+						<option value="100">100</option>
+						<option value="90">90</option>
+						<option value="80">80</option>
+					</select>
+				</h1>
 				<div style={styles.grid}>
 					{articles.map((article, index) => (
 						<div
