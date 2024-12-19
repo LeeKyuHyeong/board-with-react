@@ -35,8 +35,8 @@ const Navbar = () => {
 				<NavLink to="/baseball">Baseball</NavLink>
 				<NavLink to="/volleyball">Volleyball</NavLink>
 				<NavLink to="/soccer">Soccer</NavLink>
-				<NavLink to="/floorball">Floorball</NavLink>
-				<NavLink to="/frisbee">Frisbee</NavLink>
+				{/* <NavLink to="/floorball">Floorball</NavLink>
+				<NavLink to="/frisbee">Frisbee</NavLink> */}
       </NavLinks>
     </NavbarContainer>
   );

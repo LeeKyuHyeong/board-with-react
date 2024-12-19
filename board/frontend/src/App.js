@@ -27,6 +27,8 @@ import Volleyball from './component/sports/Volleyball';
 import Soccer from './component/sports/Soccer';
 import Floorball from './component/sports/Floorball';
 import Frisbee from './component/sports/Frisbee';
+import BatchHistory from './component/admin/batch/BatchHistory';
+import BatchDefList from './component/admin/batch/List'
 
 const App = () => {
 	const [userdata, setUserdata] = useState(null); // 사용자 정보
@@ -83,12 +85,15 @@ const App = () => {
 				<Route path="/board/create" element={<BoardCreate  /> } />
 				<Route path="/board/:id" element={<BoardDeatil  /> } />
 				<Route path="/board/edit/:id" element={<BoardEdit  /> } />
-				{/* 스포츠 */}
+				{/* 스포츠 기사*/}
 				<Route path="/baseball" element={<Baseball  /> } />
 				<Route path="/volleyball" element={<Volleyball  /> } />
 				<Route path="/soccer" element={<Soccer  /> } />
 				<Route path="/floorball" element={<Floorball  /> } />
 				<Route path="/frisbee" element={<Frisbee  /> } />
+				{/* 배치 이력 */}
+				<Route path="/batchHist" element={<BatchHistory  userdata={userdata}/> } />
+				<Route path="/batchList" element={<BatchDefList  /> } />
       </Routes>
 		</>
   );

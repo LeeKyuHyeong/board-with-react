@@ -84,6 +84,8 @@ const Navbar = ( { userdata, sessionTime } ) => {
 					{userdata.role !== "user" ? (
 						<>
 						<NavLink to="/member/lists" userdata={userdata}>Member List</NavLink>
+						<NavLink to="/batchHist" userdata={userdata}>Batch History</NavLink>
+						<NavLink to="/batchList" >Batch List</NavLink>
 						</>
 					) : (<></>)}
 					<NavLink to="/mypage">MyPage</NavLink>
