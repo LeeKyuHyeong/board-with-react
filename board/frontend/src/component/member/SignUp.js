@@ -128,7 +128,6 @@ const SignUp = () => {
 					<Select name="role" required onChange={handleChange}>
 						<option value="">===select role===</option>
 						<option value="user">user</option>
-						<option value="admin">admin</option>
 					</Select>
           <Button type="submit">Sign Up</Button>
         </form>
