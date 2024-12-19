@@ -89,8 +89,8 @@ const App = () => {
 				<Route path="/baseball" element={<Baseball  /> } />
 				<Route path="/volleyball" element={<Volleyball  /> } />
 				<Route path="/soccer" element={<Soccer  /> } />
-				<Route path="/floorball" element={<Floorball  /> } />
-				<Route path="/frisbee" element={<Frisbee  /> } />
+				{/* <Route path="/floorball" element={<Floorball  /> } />
+				<Route path="/frisbee" element={<Frisbee  /> } /> */}
 				{/* 배치 이력 */}
 				<Route path="/batchHist" element={<BatchHistory  userdata={userdata}/> } />
 				<Route path="/batchList" element={<BatchDefList  /> } />

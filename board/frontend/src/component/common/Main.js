@@ -13,6 +13,7 @@ const Main = ( {userdata} ) => {
       ) : (
         <p>Please log in to access more features.</p>
       )}
+			<p>집가서는 단어 기능 구현 해 24.12.19 17:50 - rbgud2380</p>
 			{errorMessage && <p style={styles.error}>{errorMessage}</p>}
 		</div>
 	);
