@@ -35,6 +35,7 @@ const Navbar = () => {
 				<NavLink to="/baseball">Baseball</NavLink>
 				<NavLink to="/volleyball">Volleyball</NavLink>
 				<NavLink to="/soccer">Soccer</NavLink>
+				<NavLink to="/flowball">Flow-ball</NavLink>
       </NavLinks>
     </NavbarContainer>
   );

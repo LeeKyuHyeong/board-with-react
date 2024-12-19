@@ -90,7 +90,10 @@ const Soccer = () => {
   }
 
 	if (articles.length === 0) {
-    return <div className="text-center mt-10">관련 뉴스가 없습니다.</div>;
+    return <>
+			<SportsNav/>
+			<div className="text-center mt-10">관련 뉴스가 없습니다.</div>
+		</>;
   }
 
   return (

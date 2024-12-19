@@ -63,7 +63,7 @@ const styles = {
   },
 };
 
-const Baseball = ( {setActive} ) => {
+const Baseball = () => {
   const [articles, setArticles] = useState([{}]);
 	const [loading, setLoading] = useState(true);
 	const [size, setSize] = useState(10);
@@ -74,7 +74,6 @@ const Baseball = ( {setActive} ) => {
         await axios.get(`http://localhost:8011/api/news/baseball/${size}`)
 				.then((response) => {
 					setArticles(response.data);
-					setActive("baseball");
 					setLoading(false);
 				})} catch (error) {
         console.error("Failed to fetch news", error);
@@ -84,14 +83,17 @@ const Baseball = ( {setActive} ) => {
 
     fetchNews();
 
-  }, [size, setActive]);
+  }, [size]);
 
 	if (loading) {
     return <div className="text-center mt-10">뉴스를 불러오는 중입니다...</div>;
   }
 
 	if (articles.length === 0) {
-    return <div className="text-center mt-10">관련 뉴스가 없습니다.</div>;
+    return <>
+			<SportsNav/>
+			<div className="text-center mt-10">관련 뉴스가 없습니다.</div>
+		</>;
   }
 
   return (

@@ -63,7 +63,7 @@ const styles = {
   },
 };
 
-const Volleyball = () => {
+const Flowball = () => {
   const [articles, setArticles] = useState([{}]);
 	const [loading, setLoading] = useState(true);
 	const [size, setSize] = useState(10);
@@ -71,7 +71,7 @@ const Volleyball = () => {
   useEffect(() => {
 		const fetchNews = async () => {
       try {
-        await axios.get(`http://localhost:8011/api/news/volleyball/${size}`)
+        await axios.get(`http://localhost:8011/api/news/flowball/${size}`)
 				.then((response) => {
 					setArticles(response.data);
 					setLoading(false);
@@ -100,7 +100,7 @@ const Volleyball = () => {
 		<>
 			<SportsNav/>
 			<div style={styles.container}>
-				<h1 style={styles.header}>배구 관련 최신 뉴스<select name="size" onChange={(e) =>setSize(e.target.value)}><option value="10">10</option><option value="100">100</option></select></h1>
+				<h1 style={styles.header}>플로우볼 관련 최신 뉴스<select name="size" onChange={(e) =>setSize(e.target.value)}><option value="10">10</option><option value="100">100</option></select></h1>
 				<div style={styles.grid}>
 					{articles.map((article, index) => (
 						<div
@@ -127,4 +127,4 @@ const Volleyball = () => {
   );
 };
 
-export default Volleyball;
+export default Flowball;
