@@ -25,7 +25,8 @@ import BoardEdit from './component/board/Edit'
 import Baseball from './component/sports/Baseball';
 import Volleyball from './component/sports/Volleyball';
 import Soccer from './component/sports/Soccer';
-import Flowball from './component/sports/Flowball';
+import Floorball from './component/sports/Floorball';
+import Frisbee from './component/sports/Frisbee';
 
 const App = () => {
 	const [userdata, setUserdata] = useState(null); // 사용자 정보
@@ -86,7 +87,8 @@ const App = () => {
 				<Route path="/baseball" element={<Baseball  /> } />
 				<Route path="/volleyball" element={<Volleyball  /> } />
 				<Route path="/soccer" element={<Soccer  /> } />
-				<Route path="/flowball" element={<Flowball  /> } />
+				<Route path="/floorball" element={<Floorball  /> } />
+				<Route path="/frisbee" element={<Frisbee  /> } />
       </Routes>
 		</>
   );
