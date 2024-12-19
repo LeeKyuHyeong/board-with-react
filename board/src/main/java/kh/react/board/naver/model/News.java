@@ -24,10 +24,10 @@ public class News {
     @Column(nullable = false)
     private LocalDate createdDate; // 저장 날짜
 
+    @Temporal(TemporalType.DATE) // 날짜 형식 지정
     private Date pubDate;  // 보도 날짜
 
     // Getters and Setters
-
     public Date getPubDate() {
         return pubDate;
     }

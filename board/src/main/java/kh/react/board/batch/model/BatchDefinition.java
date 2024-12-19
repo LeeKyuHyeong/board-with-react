@@ -53,6 +53,8 @@ public class BatchDefinition {
         this.description = description;
     }
 
+    public String getScheduledTime() { return scheduledTime; }
+
     public void setScheduledTime(String scheduledTime) {
         this.scheduledTime = scheduledTime;
     }

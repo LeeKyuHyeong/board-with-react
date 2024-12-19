@@ -24,7 +24,7 @@ public class NewsBatchService {
             batchHistId = batchHistory.getId();
 
             // 뉴스 데이터를 가져오고 저장
-            int result = newsService.fetchAndSaveBaseballNews();
+            int result = newsService.fetchAndSaveNews("baseball");
 
             System.out.println("batch result : " + result);
             // 배치 성공 기록
@@ -47,7 +47,7 @@ public class NewsBatchService {
             batchHistId = batchHistory.getId();
 
             // 뉴스 데이터를 가져오고 저장
-            int result = newsService.fetchAndSaveSoccerNews();
+            int result = newsService.fetchAndSaveNews("soccer");
 
             System.out.println("batch result : " + result);
             // 배치 성공 기록
@@ -71,7 +71,7 @@ public class NewsBatchService {
             batchHistId = batchHistory.getId();
 
             // 뉴스 데이터를 가져오고 저장
-            int result = newsService.fetchAndSaveVolleyballNews();
+            int result = newsService.fetchAndSaveNews("volleyball");
 
             System.out.println("batch result : " + result);
             // 배치 성공 기록
