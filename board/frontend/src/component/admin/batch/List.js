@@ -20,7 +20,7 @@ const List = () => {
     // 배치 실행
     axios
       .post(`/api/batch/definitions/run/${id}`)
-      .then((response) => {
+      .then((response) => {        
         alert(response.data);
       })
       .catch((error) => {
@@ -31,45 +31,47 @@ const List = () => {
   return (
     <div style={styles.container}>
       <h2 style={styles.header}>Batch Management</h2>
-      <table style={styles.table}>
-        <thead style={styles.tableHead}>
-          <tr>
-            <th style={styles.th}>Batch Name</th>
-            <th style={styles.th}>Description</th>
-            <th style={styles.th}>Scheduled Time</th>
-            <th style={styles.th}>Success Count</th>
-            <th style={styles.th}>Failure Count</th>
-            <th style={styles.th}>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {batchDefinitions.length > 0 ? (
-            batchDefinitions.map((batch) => (
-              <tr key={batch.batchId} style={styles.tableRow}>
-                <td style={styles.td}>{batch.batchName}</td>
-                <td style={styles.td}>{batch.description}</td>
-                <td style={styles.td}>{batch.scheduledTime}</td>
-                <td style={styles.td}>{batch.successCount}</td>
-                <td style={styles.td}>{batch.failureCount}</td>
-                <td style={styles.td}>
-                  <button
-                    style={styles.runButton}
-                    onClick={() => handleRunBatch(batch.batchId)}
-                  >
-                    Run Now
-                  </button>
+      <div style={styles.tableWrapper}>
+        <table style={styles.table}>
+          <thead style={styles.tableHead}>
+            <tr>
+              <th style={styles.th}>Batch Name</th>
+              <th style={styles.th}>Description</th>
+              <th style={styles.th}>Scheduled Time</th>
+              <th style={styles.th}>Success Count</th>
+              <th style={styles.th}>Failure Count</th>
+              <th style={styles.th}>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {batchDefinitions.length > 0 ? (
+              batchDefinitions.map((batch) => (
+                <tr key={batch.batchId}>
+                  <td style={styles.td}>{batch.batchName}</td>
+                  <td style={styles.td}>{batch.description}</td>
+                  <td style={styles.td}>{batch.scheduledTime}</td>
+                  <td style={styles.td}>{batch.successCount}</td>
+                  <td style={styles.td}>{batch.failureCount}</td>
+                  <td style={styles.td}>
+                    <button
+                      style={styles.runButton}
+                      onClick={() => handleRunBatch(batch.batchId)}
+                    >
+                      Run Now
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6" style={styles.noData}>
+                  No batches available
                 </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="6" style={styles.noData}>
-                No batches available
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
@@ -77,14 +79,23 @@ const List = () => {
 const styles = {
   container: {
     padding: "20px",
-    fontFamily: "'Roboto', Arial, sans-serif",
-    backgroundColor: "#f8f9fa",
+    fontFamily: "Arial, sans-serif",
   },
   header: {
     textAlign: "center",
     marginBottom: "20px",
-    fontSize: "24px",
-    color: "#343a40",
+  },
+  runAllButton: {
+    marginBottom: "20px",
+    padding: "10px 20px",
+    backgroundColor: "#28a745",
+    color: "#fff",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+  },
+  tableWrapper: {
+    overflowX: "auto", // 테이블을 가로로 스크롤 가능하게 만듦
   },
   table: {
     width: "100%",
@@ -100,16 +111,12 @@ const styles = {
     padding: "10px",
     textAlign: "left",
     fontWeight: "bold",
+    whiteSpace: "nowrap", // 열 크기가 작아질 때 줄바꿈 방지
   },
   td: {
     padding: "10px",
     borderBottom: "1px solid #dee2e6",
-  },
-  tableRow: {
-    transition: "background-color 0.2s",
-  },
-  tableRowHover: {
-    backgroundColor: "#f1f3f5",
+    whiteSpace: "nowrap",
   },
   noData: {
     textAlign: "center",
@@ -125,9 +132,6 @@ const styles = {
     borderRadius: "5px",
     cursor: "pointer",
     transition: "background-color 0.2s",
-  },
-  runButtonHover: {
-    backgroundColor: "#0056b3",
   },
 };
 

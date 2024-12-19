@@ -1,9 +1,7 @@
-// Navbar.js
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-// 네비게이션 바 스타일 정의
 const NavbarContainer = styled.nav`
   display: flex;
   justify-content: space-between;
@@ -23,23 +21,20 @@ const NavLinks = styled.div`
   gap: 1.5rem;
 
   @media (max-width: 768px) {
-    display: none;
+    display: ${(props) => (props.open ? "flex" : "none")};
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background-color: #333;
+    padding: 1rem 0;
   }
 `;
 
 const NavLink = styled(Link)`
   text-decoration: none;
   color: white;
-  font-size: 1rem;
-
-  &:hover {
-    color: #ddd;
-  }
-`;
-
-const NavLinkLogout = styled(Link)`
-  text-decoration: none;
-  color: red;
   font-size: 1rem;
 
   &:hover {
@@ -58,50 +53,40 @@ const MobileMenuIcon = styled.div`
   }
 `;
 
-const UserNav = styled.span`
-	color: white;
-    /* font-size: 0.7rem; */
-    /* padding-top: 0.1rem; */
-    padding: 0.1rem;
-    border: 1px solid #d4d4d6;
-    line-height: 0.8rem;
-`;
-
-const LoggedInUserB = styled.b`
-	font-size: 1rem;
-`;
-
-const Navbar = ( { userdata, sessionTime } ) => {
+const Navbar = ({ userdata, sessionTime }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <NavbarContainer>
-      <Logo><NavLink to="/" style={{"fontSize":"2rem"}}>MyApp</NavLink></Logo>
-      <NavLinks>
-			<NavLink to="/news">Sports</NavLink>
-				{userdata ? (
-					<>          
-					<NavLink to="/board/lists">Board List</NavLink>
-					{userdata.role !== "user" ? (
-						<>
-						<NavLink to="/member/lists" userdata={userdata}>Member List</NavLink>
-						<NavLink to="/batchHist" userdata={userdata}>Batch History</NavLink>
-						<NavLink to="/batchList" >Batch List</NavLink>
-						</>
-					) : (<></>)}
-					<NavLink to="/mypage">MyPage</NavLink>
-					<NavLinkLogout to="/logout">Logout</NavLinkLogout>
-					<UserNav><LoggedInUserB>{userdata.name}</LoggedInUserB> ({sessionTime}s)</UserNav>
-					</>
+      <Logo>
+        <NavLink to="/">MyApp</NavLink>
+      </Logo>
+      <MobileMenuIcon onClick={() => setMenuOpen(!menuOpen)}>
+        &#9776;
+      </MobileMenuIcon>
+      <NavLinks open={menuOpen}>
+        <NavLink to="/news">Sports</NavLink>
+        {userdata ? (
+          <>
+            <NavLink to="/board/lists">Board List</NavLink>
+            {userdata.role !== "user" && (
+              <>
+                <NavLink to="/member/lists">Member List</NavLink>
+                <NavLink to="/batchHist">Batch History</NavLink>
+                <NavLink to="/batchList">Batch List</NavLink>
+              </>
+            )}
+            <NavLink to="/mypage">MyPage</NavLink>
+            <NavLink to="/logout">Logout</NavLink>
+              <UserNav><LoggedInUserB>{userdata.name}</LoggedInUserB> ({sessionTime}s)</UserNav>
+          </>
         ) : (
-					<>
-					<NavLink to="/signup">SignUp</NavLink>
-					<NavLink to="/login">Login</NavLink>
-					</>
+          <>
+            <NavLink to="/signup">SignUp</NavLink>
+            <NavLink to="/login">Login</NavLink>
+          </>
         )}
       </NavLinks>
-      <MobileMenuIcon>
-        <span>&#9776;</span>
-      </MobileMenuIcon>
     </NavbarContainer>
   );
 };
