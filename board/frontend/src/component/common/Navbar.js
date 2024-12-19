@@ -77,7 +77,7 @@ const Navbar = ( { userdata, sessionTime } ) => {
     <NavbarContainer>
       <Logo><NavLink to="/" style={{"fontSize":"2rem"}}>MyApp</NavLink></Logo>
       <NavLinks>
-			<NavLink to="/baseball">Sports</NavLink>
+			<NavLink to="/news">Sports</NavLink>
 				{userdata ? (
 					<>          
 					<NavLink to="/board/lists">Board List</NavLink>
