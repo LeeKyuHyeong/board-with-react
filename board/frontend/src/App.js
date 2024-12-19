@@ -22,11 +22,7 @@ import BoardCreate from './component/board/BoardCreate';
 import BoardList from './component/board/List'
 import BoardDeatil from './component/board/Detail'
 import BoardEdit from './component/board/Edit'
-import Baseball from './component/sports/Baseball';
-import Volleyball from './component/sports/Volleyball';
-import Soccer from './component/sports/Soccer';
-import Floorball from './component/sports/Floorball';
-import Frisbee from './component/sports/Frisbee';
+import News from './component/sports/News';
 import BatchHistory from './component/admin/batch/BatchHistory';
 import BatchDefList from './component/admin/batch/List'
 
@@ -86,11 +82,7 @@ const App = () => {
 				<Route path="/board/:id" element={<BoardDeatil  /> } />
 				<Route path="/board/edit/:id" element={<BoardEdit  /> } />
 				{/* 스포츠 기사*/}
-				<Route path="/baseball" element={<Baseball  /> } />
-				<Route path="/volleyball" element={<Volleyball  /> } />
-				<Route path="/soccer" element={<Soccer  /> } />
-				{/* <Route path="/floorball" element={<Floorball  /> } />
-				<Route path="/frisbee" element={<Frisbee  /> } /> */}
+				<Route path="/news" element={<News  /> } />
 				{/* 배치 이력 */}
 				<Route path="/batchHist" element={<BatchHistory  userdata={userdata}/> } />
 				<Route path="/batchList" element={<BatchDefList  /> } />
