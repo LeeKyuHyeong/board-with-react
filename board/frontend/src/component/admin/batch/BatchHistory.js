@@ -37,35 +37,52 @@ const BatchHistory = ({ userdata }) => {
     return <h3>Unauthorized Access</h3>;
   }
 
+  
+
   return (
     <div style={styles.container}>
-      <h2 style={styles.header}>Batch History</h2>
+      <h2 style={styles.title}>Batch History</h2>
       <table style={styles.table}>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Batch Name</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>Status</th>
-            <th>Error Code</th>
-            <th>Duration</th>
-						<th>Remarks</th>
+            <th style={styles.th}>Batch Name</th>
+            <th style={styles.th}>Start Time</th>
+            <th style={styles.th}>End Time</th>
+            <th style={styles.th}>Status</th>
+            <th style={styles.th}>Error Code</th>
+            <th style={styles.th}>Duration</th>
+						<th style={styles.th}>Remarks</th>
           </tr>
         </thead>
         <tbody>
-          {batches.map((batch) => (
-            <tr style={styles.tableTr} key={batch.id}>
-              <td>{batch.id}</td>
-              <td>{batch.batchName}</td>
-              <td>{batch.startTime}</td>
-              <td>{batch.endTime || "N/A"}</td>
-              <td style={batch.status === "SUCCESS" ? styles.success : styles.failure}>
-                {batch.status}
+          {batches.map((history) => (
+            <tr
+              key={history.id}
+              style={
+                history.status === "SUCCESS"
+                  ? styles.rowSuccess
+                  : history.status === "FAILURE"
+                  ? styles.rowFailure
+                  : styles.rowRunning
+              }
+            >
+              <td style={styles.td}>{history.batchName}</td>
+              <td style={styles.td}>
+                {history.startTime
+                  ? new Date(history.startTime).toLocaleString()
+                  : "N/A"}
               </td>
-              <td>{batch.errorCode || "N/A"}</td>
-              <td>{calculateDuration(batch.startTime, batch.endTime)}</td>
-							<td>{batch.remarks || "N/A"}</td>
+              <td style={styles.td}>
+                {history.endTime
+                  ? new Date(history.endTime).toLocaleString()
+                  : "N/A"}
+              </td>
+              <td style={styles.td}>{history.status}</td>
+              <td style={styles.td}>{history.errorCode || "N/A"}</td>
+              <td style={styles.td}>
+                {calculateDuration(history.startTime, history.endTime)}
+              </td>
+							<td style={styles.td}>{history.remarks || "N/A"}</td>
             </tr>
           ))}
         </tbody>
@@ -75,29 +92,43 @@ const BatchHistory = ({ userdata }) => {
 };
 
 const styles = {
-  container: {
-    padding: "20px",
-    fontFamily: "Arial, sans-serif",
-  },
-  header: {
-    textAlign: "center",
-    marginBottom: "20px",
-  },
-  table: {
-    width: "100%",
-    borderCollapse: "collapse",
-  },
-  success: {
-    color: "green",
-  },
-  failure: {
-    color: "red",
-  },
-  tableRow: {
-    borderBottom: "1px solid #ddd",
-  },
-	tableTr: {
-		textAlign: "center"
+	container: {
+		// margin: "20px",
+		padding: "20px",
+		backgroundColor: "#f8f9fa",
+		borderRadius: "10px",
+		boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+	},
+	title: {
+		fontSize: "24px",
+		fontWeight: "bold",
+		marginBottom: "20px",
+		color: "#343a40",
+	},
+	table: {
+		width: "100%",
+		borderCollapse: "collapse",
+	},
+	th: {
+		backgroundColor: "#007bff",
+		color: "white",
+		textAlign: "center",
+		padding: "10px",
+		border: "1px solid #dee2e6",
+	},
+	td: {
+		padding: "10px",
+		border: "1px solid #dee2e6",
+		textAlign: "center",
+	},
+	rowSuccess: {
+		backgroundColor: "#d4edda",
+	},
+	rowFailure: {
+		backgroundColor: "#f8d7da",
+	},
+	rowRunning: {
+		backgroundColor: "#fff3cd",
 	},
 };
 
