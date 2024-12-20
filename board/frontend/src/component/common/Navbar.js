@@ -53,6 +53,19 @@ const MobileMenuIcon = styled.div`
   }
 `;
 
+const UserNav = styled.span`
+	color: white;
+    /* font-size: 0.7rem; */
+    /* padding-top: 0.1rem; */
+    padding: 0.1rem;
+    border: 1px solid #d4d4d6;
+    line-height: 0.8rem;
+`;
+
+const LoggedInUserB = styled.b`
+	font-size: 1rem;
+`;
+
 const Navbar = ({ userdata, sessionTime }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
