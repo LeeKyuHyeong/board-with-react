@@ -117,7 +117,6 @@ const MyPage = ( { userdata } ) => {
           <Input
             type="password"
             name="password"
-            value={member.password}
             onChange={handleInputChange}
           />
         </div>
