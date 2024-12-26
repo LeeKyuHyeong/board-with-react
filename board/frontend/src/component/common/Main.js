@@ -14,6 +14,8 @@ const Main = ( {userdata} ) => {
         <p>Please log in to access more features.</p>
       )}
       <p>Nothing impossible</p>
+      <p>It's new start fighting!!
+      </p>
 			{errorMessage && <p style={styles.error}>{errorMessage}</p>}
 		</div>
 	);
