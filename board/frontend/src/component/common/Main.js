@@ -13,13 +13,7 @@ const Main = ( {userdata} ) => {
       ) : (
         <p>Please log in to access more features.</p>
       )}
-      <p>Nothing impossible</p>
-      <p>It's new start fighting!!
-      </p>
-      <p>It's nice to see you! see you later~
-      </p>
-
-			{errorMessage && <p style={styles.error}>{errorMessage}</p>}
+      {errorMessage && <p style={styles.error}>{errorMessage}</p>}
 		</div>
 	);
 };
