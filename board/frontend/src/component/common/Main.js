@@ -11,7 +11,7 @@ const Main = ( {userdata} ) => {
       {userdata ? (
         <p>Hello, {userdata.name}! You are logged in.</p>
       ) : (
-        <p>Please log in to access more features.</p>
+        <p>Please Sign in to access more features.</p>
       )}
       {errorMessage && <p style={styles.error}>{errorMessage}</p>}
 		</div>
