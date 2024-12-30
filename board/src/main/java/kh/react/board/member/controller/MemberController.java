@@ -59,13 +59,13 @@ public class MemberController {
 
     // 특정 ID를 가진 회원을 조회
     @GetMapping("/members/{id}")
-    public Member getMemberDetail(@PathVariable Long id) {
+    public Member getMemberDetail(@PathVariable String id) {
         return memberService.getMemberById(id);
     }
 
     // 회원 삭제
     @DeleteMapping("/members/{id}")
-    public String deleteMember(@PathVariable Long id) {
+    public String deleteMember(@PathVariable String id) {
         boolean isDeleted = memberService.deleteMember(id);
         if (isDeleted) {
             return "Member deleted successfully";
@@ -76,7 +76,7 @@ public class MemberController {
 
     // 회원 정보 수정
     @PutMapping("/members/{id}")
-    public Member updateMember(@PathVariable Long id, @RequestBody Member member) {
+    public Member updateMember(@PathVariable String id, @RequestBody Member member) {
         return memberService.updateMember(id, member);
     }
 
@@ -97,7 +97,7 @@ public class MemberController {
 //        if (findMember != null && (member.getPassword().equals(findMember.getPassword()))) {
             // 로그인 성공, 세션에 사용자 정보 저장
             request.getSession().setAttribute("member", findMember);
-            request.getSession().setAttribute("userId", findMember.getId().toString());
+            request.getSession().setAttribute("userId", findMember.getId());
             timeout = request.getSession().getMaxInactiveInterval(); // 세션 유지 시간 (초)
 
             statCd = "200";

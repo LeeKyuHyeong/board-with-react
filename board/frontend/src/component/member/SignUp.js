@@ -60,6 +60,7 @@ const Select = styled.select`
 
 const SignUp = () => {
 	const [formData, setFormData] = useState({
+		id:'',
     name: '',
     email: '',
     password: '',
@@ -101,6 +102,14 @@ const SignUp = () => {
       <FormContainer>
         <Title>Sign Up</Title>
         <form onSubmit={handleSubmit}>
+					<Input
+            type="text"
+            name="id"
+            placeholder="ID"
+            value={formData.id}
+            onChange={handleChange}
+						required
+          />
           <Input
             type="text"
             name="name"

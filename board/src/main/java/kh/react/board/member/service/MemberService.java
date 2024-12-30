@@ -50,8 +50,8 @@ public class MemberService {
     // 회원가입
     public void registerMember(Member member) {
 
-        if (memberRepository.existsByEmail(member.getEmail())) {
-            throw new IllegalArgumentException("Email is already in use.");
+        if (memberRepository.existsById(member.getId())) {
+            throw new IllegalArgumentException("ID is already in use.");
         }
         // 비밀번호 암호화
         member.setPassword(passwordEncoder.encode(member.getPassword()));
@@ -82,12 +82,12 @@ public class MemberService {
     }
 
     // 특정 ID를 가진 회원을 조회
-    public Member getMemberById(Long id) {
+    public Member getMemberById(String id) {
         return memberRepository.findById(id).orElseThrow(() -> new RuntimeException("Member not found"));
     }
 
     // 회원 삭제
-    public boolean deleteMember(Long id) {
+    public boolean deleteMember(String id) {
         if (memberRepository.existsById(id)) {
             memberRepository.deleteById(id);
             return true;
@@ -95,7 +95,7 @@ public class MemberService {
         return false;
     }
     // 회원 정보 수정
-    public Member updateMember(Long id, Member updatedMember) {
+    public Member updateMember(String id, Member updatedMember) {
         if (memberRepository.existsById(id)) {
             updatedMember.setId(id);  // 기존 ID를 유지
             updatedMember.setPassword(passwordEncoder.encode(updatedMember.getPassword()));  // 비밀번호 암호화

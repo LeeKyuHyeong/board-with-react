@@ -41,7 +41,7 @@ public class AdminController {
 
     // Admin 전용 API: 특정 사용자 삭제
     @DeleteMapping("/admin/members/{id}")
-    public String deleteMember(@PathVariable Long id) {
+    public String deleteMember(@PathVariable String id) {
         memberRepository.deleteById(id);
         return "Member deleted successfully";
     }
