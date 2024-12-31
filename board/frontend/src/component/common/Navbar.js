@@ -82,6 +82,7 @@ const Navbar = ({ userdata, sessionTime }) => {
         {userdata ? (
           <>
             <NavLink to="/board/lists">Board List</NavLink>
+						<NavLink to="/game">Mini Game</NavLink>
             {userdata.role !== "user" && (
               <>
                 <NavLink to="/member/lists">Member List</NavLink>

@@ -25,6 +25,8 @@ import BoardEdit from './component/board/Edit'
 import News from './component/sports/News';
 import BatchHistory from './component/admin/batch/BatchHistory';
 import BatchDefList from './component/admin/batch/List'
+import GameMainPage from './component/game/GameMainPage';
+import EditGamePage from './component/game/EditGamePage';
 
 const App = () => {
 	const [userdata, setUserdata] = useState(null); // 사용자 정보
@@ -86,6 +88,16 @@ const App = () => {
 				{/* 배치 이력 */}
 				<Route path="/batchHist" element={<BatchHistory  userdata={userdata}/> } />
 				<Route path="/batchList" element={<BatchDefList  /> } />
+				{/* 게임 */}
+				<Route path="/game" element={<GameMainPage  userdata={userdata}/> } />
+				<Route path="/game/body-language" element={<div>몸으로 말해요 게임 화면</div>} />
+        <Route path="/game/quiz" element={<div>상식 퀴즈 게임 화면</div>} />
+        <Route path="/game/lyric-guess" element={<div>가사 맞추기 게임 화면</div>} />
+        <Route path="/game/person" element={<div>인물 맞추기 게임 화면</div>} />
+        <Route path="/game/song" element={<div>노래 맞추기 게임 화면</div>} />
+        <Route path="/game/drama" element={<div>드라마 맞추기 게임 화면</div>} />
+        <Route path="/game/dialogue" element={<div>대사 맞추기 게임 화면</div>} />
+				<Route path="/edit-games" element={<EditGamePage />} />
       </Routes>
 		</>
   );
