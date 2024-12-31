@@ -88,6 +88,7 @@ const Navbar = ({ userdata, sessionTime }) => {
                 <NavLink to="/member/lists">Member List</NavLink>
                 <NavLink to="/batchHist">Batch History</NavLink>
                 <NavLink to="/batchList">Batch List</NavLink>
+								<NavLink to="/game/admin/body-language">B_L_ADMIN</NavLink>
               </>
             )}
             <NavLink to="/mypage">MyPage</NavLink>

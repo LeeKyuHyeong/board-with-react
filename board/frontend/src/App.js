@@ -27,6 +27,7 @@ import BatchHistory from './component/admin/batch/BatchHistory';
 import BatchDefList from './component/admin/batch/List'
 import GameMainPage from './component/game/GameMainPage';
 import EditGamePage from './component/game/EditGamePage';
+import BodyLanguageAdminPage from './component/admin/game/BodyLanguageAdminPage';
 
 const App = () => {
 	const [userdata, setUserdata] = useState(null); // 사용자 정보
@@ -98,6 +99,8 @@ const App = () => {
         <Route path="/game/drama" element={<div>드라마 맞추기 게임 화면</div>} />
         <Route path="/game/dialogue" element={<div>대사 맞추기 게임 화면</div>} />
 				<Route path="/edit-games" element={<EditGamePage />} />
+				{/* 게임 관리자 */}
+				<Route path="/game/admin/body-language" element={<BodyLanguageAdminPage />} />
       </Routes>
 		</>
   );

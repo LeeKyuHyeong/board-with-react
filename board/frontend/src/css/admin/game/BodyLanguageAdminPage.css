@@ -1,0 +1,87 @@
+/* src/pages/BodyLanguageAdminPage.css */
+.admin-page {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.admin-page h1 {
+  text-align: center;
+  color: #555;
+}
+
+.admin-page h2 {
+  margin-top: 20px;
+  color: #333;
+}
+
+.admin-page input,
+.admin-page textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.admin-page button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.admin-page button:hover {
+  background-color: #45a049;
+}
+
+.admin-page ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.admin-page ul li {
+  background-color: #fff;
+  margin: 5px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-page ul li button {
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.admin-page ul li button:hover {
+  background-color: #e64a19;
+}
+
+.add-section {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.group-list,
+.item-list {
+  margin-top: 20px;
+}
+
+.group-list button,
+.item-list button {
+  margin-left: 10px;
+}
