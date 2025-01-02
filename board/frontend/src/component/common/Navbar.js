@@ -78,27 +78,27 @@ const Navbar = ({ userdata, sessionTime }) => {
         &#9776;
       </MobileMenuIcon>
       <NavLinks open={menuOpen}>
-        <NavLink to="/news">Sports</NavLink>
+        <NavLink to="/news">스포츠</NavLink>
         {userdata ? (
           <>
-            <NavLink to="/board/lists">Board List</NavLink>
-            <NavLink to="/game">Mini Game</NavLink>
+            <NavLink to="/board/lists">게시판</NavLink>
+            <NavLink to="/game">게임</NavLink>
             {userdata.role !== "user" && (
               <>
-                <NavLink to="/member/lists">Member List</NavLink>
-                <NavLink to="/batchHist">Batch History</NavLink>
-                <NavLink to="/batchList">Batch List</NavLink>
-								<NavLink to="/game/admin/body-language">B_L_ADMIN</NavLink>
+                <NavLink to="/member/lists">사용자</NavLink>
+                <NavLink to="/batchHist">배치 이력</NavLink>
+                <NavLink to="/batchList">배치 목록록</NavLink>
+								<NavLink to="/game/admin/body-language">몸으로말해요 관리리</NavLink>
               </>
             )}
-            <NavLink to="/mypage">MyPage</NavLink>
-            <NavLink to="/logout">Logout</NavLink>
+            <NavLink to="/mypage">내정보</NavLink>
+            <NavLink to="/logout">로그아웃</NavLink>
               <UserNav><LoggedInUserB>{userdata.name}</LoggedInUserB> ({sessionTime}s)</UserNav>
           </>
         ) : (
           <>
-            <NavLink to="/signup">SignUp</NavLink>
-            <NavLink to="/login">Login</NavLink>
+            <NavLink to="/signup">회원가입</NavLink>
+            <NavLink to="/login">로그인</NavLink>
           </>
         )}
       </NavLinks>
