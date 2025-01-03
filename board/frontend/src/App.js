@@ -28,6 +28,7 @@ import BatchDefList from './component/admin/batch/List'
 import GameMainPage from './component/game/GameMainPage';
 import EditGamePage from './component/game/EditGamePage';
 import BodyLanguageAdminPage from './component/admin/game/BodyLanguageAdminPage';
+import Memo from './component/common/Memo';
 
 const App = () => {
 	const [userdata, setUserdata] = useState(null); // 사용자 정보
@@ -101,6 +102,8 @@ const App = () => {
 				<Route path="/edit-games" element={<EditGamePage />} />
 				{/* 게임 관리자 */}
 				<Route path="/game/admin/body-language" element={<BodyLanguageAdminPage />} />
+				{/* 나만의 장소 */}
+				<Route path="/memo" element={<Memo />} />
       </Routes>
 		</>
   );

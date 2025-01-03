@@ -99,6 +99,7 @@ const Navbar = ({ userdata, sessionTime }) => {
           <>
             <NavLink to="/signup">회원가입</NavLink>
             <NavLink to="/login">로그인</NavLink>
+						<NavLink to="/memo">메모</NavLink>
           </>
         )}
       </NavLinks>
